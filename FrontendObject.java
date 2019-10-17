@@ -5,7 +5,7 @@ public class FrontendObject {
 	private AccountFileObject accNums;
 	private TSummaryObject summary;
 	
-	//0 = not logged in, 1 = logged in ATM, 2 = logged in agent, -1 = logged out
+	//0 = not logged in, 1 = logged in ATM, 2 = logged in agent, 3 = logged out, -1 = error
 	private int state;
 	
 	public FrontendObject (String accountFile, String outFile) {
@@ -32,6 +32,18 @@ public class FrontendObject {
 	
 	public void setState (int n) {
 		state = n;
+	}
+	
+	public boolean checkDuplicate(int n) {
+		return accNums.checkDuplicate(n);
+	}
+	
+	public void stackPush(String transLine) {
+		summary.stackPush(transLine);
+	}
+	
+	public void createSummary() throws IOException {
+		summary.createFile();
 	}
 
 }

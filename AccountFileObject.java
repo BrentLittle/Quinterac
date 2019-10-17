@@ -34,15 +34,17 @@ public class AccountFileObject {
 		}
 	}
 	
-		public ArrayList<Integer> clone() {
-		ArrayList<Integer> copied = new ArrayList<Integer>();
-		for (int i = 0; i < accNums.size(); i++)
-			copied.add(accNums.get(i));
-		return copied;
+	public boolean checkDuplicate(int n) {
+		for (int i = 0; i < accNums.size(); i++) {
+			if (accNums.get(i) == n) {
+				return true;
+			}
+		}
+		return false;
 	}
-	
+		
 	public int getAccNum(int index) {
-		ArrayList<Integer> returnClone = accNums.clone();
-		return returnClone.get(index);
+		int n = accNums.get(index);
+		return n;
 	}
 }
