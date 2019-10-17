@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class FileVerification {
 	
-	ArrayList<Integer> accNums = new ArrayList<Integer>();
+	public ArrayList<Integer> accNums = new ArrayList<Integer>();
 	boolean fileValid = false;
 	String fileName = "";
 	
@@ -82,5 +82,10 @@ public class FileVerification {
 	public int getAccNum(int index) {
 		int n = accNums.get(index);
 		return n;
+	}
+	
+	public ArrayList<Integer> getAccNums()
+	{
+		return accNums;
 	}
 }

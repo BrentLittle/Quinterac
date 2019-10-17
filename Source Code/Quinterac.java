@@ -17,35 +17,53 @@ public class Quinterac {
 		"deposit", "withdraw", "transfer"));
 	
 	@SuppressWarnings("unused")
-	public static int main(String args[]) {
+	public static int main(String args[]) 
+	{
 		FrontendObject session = null;
-		try {
+		
+		try 
+		{
 			session = new FrontendObject(args[0], args[1]);
-		} catch (Exception e) {
+		} catch (Exception e) 
+		{
 			//will have to catch each exception individually, probably
 			return 1;
 		}
 		BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));
-		while (session.getState() > 0) {
-			if (session.getState() == 3) {
-				try{
+		
+		while (session.getState() > 0) 
+		{
+			
+			if (session.getState() == 3) 
+			{
+				
+				try
+				{
 					session.createSummary();
-				} catch (IOException e) {
+				} 
+				catch (IOException e) 
+				{
 					System.out.printf("Error encountered while writing to file" + args[1]);
 					return 1;
 				}
+				
 				System.out.printf("Session completed, output printed to " + args[1]);
 			} //ie, if "logout" has been encountered
+			
 			System.out.printf("Please enter a transaction: ");
 			String transaction = null;
-			try {
+			try 
+			{
 				transaction = consoleIn.readLine().toLowerCase();
 			} catch (IOException e) {
-				// shouldnt get here....
+				// shouldn't get here....
 			}
 			AbsTransactionObject currentT = null;
-			switch (commands.indexOf(transaction)) {
-			case 0:
+			
+			switch (commands.indexOf(transaction)) 
+			{
+			
+			case 0: // Login
 				try {
 					currentT = new LoginTObject(session.getState());
 				} catch (OutOfOrderException e) {
@@ -54,12 +72,19 @@ public class Quinterac {
 				}
 				currentT.process();
 				session.setState(currentT.getState());
-			case 1:
-			case 2:
-			case 3:
-			case 4:
-			case 5:
-			case 6:
+			
+			case 1: // Logout
+			
+			case 2: // createAcct
+			
+			case 3: // deleteAcct
+			
+			case 4: // deposit
+			
+			case 5: // withdraw
+			
+			case 6: // transfer
+			
 			default: 
 				System.out.printf("Unrecognized transaction: " + transaction);
 				continue;
