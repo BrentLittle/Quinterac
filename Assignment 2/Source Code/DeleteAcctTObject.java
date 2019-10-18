@@ -101,12 +101,11 @@ public class DeleteAcctTObject extends AbsTransactionObject
 	
 	public void deleteAccountFromList(String account)
 	{
-		int index = 0;
 		for (int i = 0; i < accountsList.size(); i++) {
 			if (accountsList.get(i) == Integer.parseInt(account)) {
-				index = i;
+				accountsList.remove(i);
+				break;
 			}
-			accountsList.remove(index);
 		}
 	}
 	

@@ -126,7 +126,7 @@ public class Quinterac {
 			case 4: // deposit
 				try
 			     {
-			    	 currentT = new DepositTObject(session.getState(),session.getAccountList());
+			    	 currentT = new DepositTObject(session.getState(),session.getAccountList(), session);
                 } 
 			     catch (OutOfOrderException e) 
 			     {
