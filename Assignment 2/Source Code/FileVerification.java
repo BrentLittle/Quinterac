@@ -5,6 +5,8 @@ import java.util.Arrays;
 // This class when given a valid file name for an accounts List file will determine if all of the lines in the file
 // meet the requirements of valid account numbers and an ending entry of 0000000
 
+// Author Brent Littlefield (20060929)
+
 public class FileVerification {
 	
 	public ArrayList<Integer> accNums = new ArrayList<Integer>();
