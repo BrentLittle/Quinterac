@@ -17,7 +17,7 @@ public class DeleteAcctTObject extends AbsTransactionObject
 		accountsList = al;
 		state = s;
 		
-		if (s != 2) throw new OutOfOrderException("Cannot Delete Account when not logged in as Agent");
+		if (s != 2) throw new OutOfOrderException("Cannot Delete Account when not logged in as Machine \n");
 		{
 			outState = -1;
 		}
@@ -39,12 +39,12 @@ public class DeleteAcctTObject extends AbsTransactionObject
 					
 					if(checkDuplicate(Integer.parseInt(accountNumber)))
 					{
-						System.out.println("Account Number Entered is Valid...");
-						System.out.println("Please Enter an Account Name:");
+						System.out.println("Account Number Entered is valid...");
 					}
 					else
 					{
-						System.out.println("Account Number Entered is not in The Valid Accounts List...");
+						System.out.println("Account Number Entered is valid but not in the Valid Accounts List...");
+						continue;
 					}
 					break;
 				}
@@ -62,7 +62,7 @@ public class DeleteAcctTObject extends AbsTransactionObject
 		// collect a correctly formatted account name
 		while(true)
 		{
-			System.out.printf("Please enter valid Account Name to Delete from System: ");
+			System.out.printf("Please enter Account Name to Delete from System: ");
 			try 
 			{
 				accountName = consoleIn.readLine();
@@ -95,7 +95,7 @@ public class DeleteAcctTObject extends AbsTransactionObject
 	
 	public String outString()
 	{
-		return "DEL "+accountNumber+" 000 0000000 "+ accountName;
+		return "DEL "+accountNumber+" 000 0000000 "+ accountName+ "\n";
 	}
 	
 	

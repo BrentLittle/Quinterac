@@ -7,8 +7,9 @@ public class TSummaryObject {
 	
 	private Stack<String> outStrings;
 
-	public TSummaryObject(String outfile) throws IOException {
-		this.outfile = outfile;
+	public TSummaryObject(String out) throws IOException {
+		outfile = out;
+		outStrings = new Stack<String>();
 		outStrings.push("EOS");
 	}
 	
@@ -24,4 +25,7 @@ public class TSummaryObject {
 			}
 		output.close();
 	}
+	public Stack<String> getTransactions(){
+        return outStrings;
+    }
 }

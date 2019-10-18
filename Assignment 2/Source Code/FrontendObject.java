@@ -17,6 +17,7 @@ public class FrontendObject {
 	public FrontendObject (String accountFile, String outFile) {
 		accNums = null;
 		summary = null;
+		state = 0;
 		try {
 			accNums = new FileVerification(accountFile);
 		} catch (Exception e) {
@@ -39,6 +40,10 @@ public class FrontendObject {
 	public void setState (int n) {
 		state = n;
 	}
+	
+	public Stack<String> getTransactions(){
+        return summary.getTransactions();
+    }
 	
 	public boolean checkDuplicate(int n) {
 		return accNums.checkDuplicate(n);
