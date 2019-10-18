@@ -43,11 +43,11 @@ public class Quinterac {
 				} 
 				catch (IOException e) 
 				{
-					System.out.printf("Error encountered while writing to file" + args[1]);
+					System.out.println("Error encountered while writing to file" + args[1]);
 					//return 1;
 				}
 				
-				System.out.printf("Session completed, output printed to " + args[1]);
+				System.out.println("Session completed, output printed to " + args[1]);
 			} //ie, if "logout" has been encountered
 			
 			System.out.printf("Please enter a transaction: ");
@@ -63,7 +63,7 @@ public class Quinterac {
 			switch (commands.indexOf(transaction)) 
 			{
 			
-			case 0: // Login
+			case 0: // Login //Good
 				try 
 				{
 					currentT = new LoginTObject(session.getState());
@@ -92,7 +92,7 @@ public class Quinterac {
 			
 			
 			
-			case 2: // createAcct
+			case 2: // createAcc
 				try 
 				{
 					currentT = new CreateTObject(session.getState(), session.getAccountList());

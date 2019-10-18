@@ -30,7 +30,7 @@ public class LoginTObject extends AbsTransactionObject {
 				outState = 2;
 				break;
 			default:
-				System.out.printf("Please enter 'machine' or 'agent'.");
+				System.out.printf("Please enter 'machine' or 'agent'. ");
 				break;
 			}
 		}

@@ -16,10 +16,10 @@ public class CreateTObject extends AbsTransactionObject {
 	
 	public CreateTObject(int state , ArrayList <Integer> accList) throws OutOfOrderException{
 		if(state == 0) {
-			throw new OutOfOrderException("cant create account before login");
+			throw new OutOfOrderException("Can't create account before login\n");
 		}
 		if(state != 2) {
-			throw new OutOfOrderException("cant create account outside of agent login");
+			throw new OutOfOrderException("Can't create account outside of agent login\n");
 		}
 		
 		this.state = state;
@@ -29,12 +29,11 @@ public class CreateTObject extends AbsTransactionObject {
 		// at this point, all permissions are assumed.
 	public void process()
 	{
-		while(true) 
-		{
+		//while(true) 
+		//{
 			//int state = 2;
-			if (state == 2) 
-			{
-				
+			//if (state == 2) 
+			//{
 				BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));
 				while(true)
 				{
@@ -46,11 +45,19 @@ public class CreateTObject extends AbsTransactionObject {
 					catch(IOException e) {
 						//shouldn't get here
 					}
+					
 					if (!checkValidAccountNumber(accNum))
 					{
 						System.out.println("Account Number is Not Valid");
 						continue;
 					}
+					
+					if(accList.contains(Integer.parseInt(accNum)))
+					{
+						System.out.println("Account Number Already in Use");
+						continue;
+					}
+					
 					else
 					{
 						break;
@@ -80,10 +87,13 @@ public class CreateTObject extends AbsTransactionObject {
 					}
 				}
 				
+				System.out.println("Account Number "+accNum+" for "+accName+" has been created");
+	}
+				
 //				System.out.println("Enter Account Name");
 //				try 
 //				{
-//					accName =consoleIn.readLine();
+//					accName = consoleIn.readLine();
 //				}
 //				catch(IOException e) {
 //					//shouldn't get here
@@ -119,9 +129,9 @@ public class CreateTObject extends AbsTransactionObject {
 //				}
 				
 				//outString = "NEW "+Integer.toString(accNum) +" "+"000 " + "0000000 "+accName+"/n";
-				}
-			}
-		}
+				
+			//}
+		//}
 			
 		public int getState() {
 			return 0;
