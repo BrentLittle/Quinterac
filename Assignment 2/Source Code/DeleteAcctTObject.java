@@ -3,6 +3,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+/**
+*
+* @author Brent Littlefield - 16bml1 - 20060929
+*/
+
 public class DeleteAcctTObject extends AbsTransactionObject
 {
 	private int outState;
@@ -12,12 +17,12 @@ public class DeleteAcctTObject extends AbsTransactionObject
 	String accountNumber = null;
 	String accountName = null;
 	
-	public DeleteAcctTObject(int s, ArrayList<Integer> al) throws OutOfOrderException
+	public DeleteAcctTObject(int st, ArrayList<Integer> aL) throws OutOfOrderException
 	{
-		accountsList = al;
-		state = s;
+		accountsList = aL;
+		state = st;
 		
-		if (s != 2) throw new OutOfOrderException("Cannot Delete Account when not logged in as Machine \n");
+		if (st != 2) throw new OutOfOrderException("Cannot Delete Account when not logged in as Machine \n");
 		{
 			outState = -1;
 		}
@@ -29,15 +34,17 @@ public class DeleteAcctTObject extends AbsTransactionObject
 		BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));
 		
 		
-		while (true) { // collect a valid account Number from the User
+		while (true)  // collect a valid account Number from the User
+		{
 			System.out.printf("Please enter valid Account Number to Delete from System: ");
 			try 
 			{
-				accountNumber = consoleIn.readLine();
-				if(checkvalidAccountNumber(accountNumber))
+				accountNumber = consoleIn.readLine(); // get input from the User
+				
+				if(checkvalidAccountNumber(accountNumber)) // check if it is a valid account number
 				{
 					
-					if(checkDuplicate(Integer.parseInt(accountNumber)))
+					if(checkDuplicate(Integer.parseInt(accountNumber))) // check if it is in the accounts list
 					{
 						System.out.println("Account Number Entered is valid...");
 					}
@@ -46,7 +53,7 @@ public class DeleteAcctTObject extends AbsTransactionObject
 						System.out.println("Account Number Entered is valid but not in the Valid Accounts List...");
 						continue;
 					}
-					break;
+					break; // we have a valid account number to delete
 				}
 				else
 				{
@@ -59,22 +66,23 @@ public class DeleteAcctTObject extends AbsTransactionObject
 				e.printStackTrace();
 			}			
 		}
-		// collect a correctly formatted account name
-		while(true)
+		
+		while(true) // while loop to collect a correctly formatted account name from user
 		{
 			System.out.printf("Please enter Account Name to Delete from System: ");
 			try 
 			{
-				accountName = consoleIn.readLine();
-				if(checkValidAccountName(accountName))
+				accountName = consoleIn.readLine(); // collect input from user
+				
+				if(checkValidAccountName(accountName)) // check if it is correctly formatted
 				{
 					System.out.println("Account Name Entered is Valid...");
-					break;
+					break; // we have a valid account name to do with the account number so break out of the loop
 				}
 				else
 				{
 					System.out.println("Account Name: '" + accountName + "' is Not Valid");
-					continue;
+					continue; // get the user to re-enter 
 				}
 			} 
 			catch (IOException e) 
@@ -84,6 +92,8 @@ public class DeleteAcctTObject extends AbsTransactionObject
 		}
 		// at this stage we have a valid accountNumber and accountName variables
 		System.out.println("Account "+accountNumber+" owned by "+accountName+" will be deleted at the end of the session. The account has been locked.");
+		
+		// delete the account from the validAccountsList so we cannot perform any more transactions on that account
 		deleteAccountFromList(accountNumber);
 		
 	}// end of process method
@@ -99,10 +109,12 @@ public class DeleteAcctTObject extends AbsTransactionObject
 	}
 	
 	
-	public void deleteAccountFromList(String account)
+	public void deleteAccountFromList(String account) // used to remove file from validAccounts list so we do not apply transactions with this account 
 	{
-		for (int i = 0; i < accountsList.size(); i++) {
-			if (accountsList.get(i) == Integer.parseInt(account)) {
+		for (int i = 0; i < accountsList.size(); i++) 
+		{
+			if (accountsList.get(i) == Integer.parseInt(account)) 
+			{
 				accountsList.remove(i);
 				break;
 			}
@@ -110,9 +122,12 @@ public class DeleteAcctTObject extends AbsTransactionObject
 	}
 	
 	
-	public boolean checkDuplicate(int n) {
-		for (int i = 0; i < accountsList.size(); i++) {
-			if (accountsList.get(i) == n) {
+	public boolean checkDuplicate(int n) // check if file is in the AccountsList
+	{
+		for (int i = 0; i < accountsList.size(); i++) 
+		{
+			if (accountsList.get(i) == n) 
+			{
 				return true;
 			}
 		}
@@ -121,7 +136,7 @@ public class DeleteAcctTObject extends AbsTransactionObject
 	
 	public boolean checkvalidAccountNumber(String input)
 	{
-		if(input.length() != 7) // less than 7 digits in account number
+		if(input.length() != 7) // accountNum is not 7 digits in account number
     	{
     		return false;
     	}
@@ -142,7 +157,7 @@ public class DeleteAcctTObject extends AbsTransactionObject
 		{
 			return false;
 		}
-		else if(input.startsWith(" ") || input.endsWith(" "))
+		else if(input.startsWith(" ") || input.endsWith(" ")) // account name must not start or end with a space
 		{
 			return false;
 		}

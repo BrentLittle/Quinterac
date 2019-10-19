@@ -249,7 +249,7 @@ public class WithdrawTObject extends AbsTransactionObject {
         
         System.out.println("Successfully withdrew " + amount + " cents from account "
                 + accFrom + ".");
-        outString = "WDR " + blankAccount + " " + amount + " " + accFrom + " " + blankName;
+        outString = "WDR " + blankAccount + " " + amount + " " + accFrom + " " + blankName+ "\n";
     }
 
     /**

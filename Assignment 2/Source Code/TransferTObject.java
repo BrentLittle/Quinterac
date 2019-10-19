@@ -349,7 +349,7 @@ public class TransferTObject extends AbsTransactionObject {
         
         System.out.println("Successfully transferred " + amount + " cents from account "
                 + accFrom + " to " + accTo + ".");
-        outString = "XFR " + accTo + " " + amount + " " + accFrom + " " + blankName;
+        outString = "XFR " + accTo + " " + amount + " " + accFrom + " " + blankName +"\n";
     }
 
     /**

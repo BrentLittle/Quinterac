@@ -25,7 +25,7 @@ public class LogoutTObject extends AbsTransactionObject
 	@Override
 	public String outString() 
 	{
-		return "EOS 0000000 000 0000000 ***";
+		return "EOS 0000000 000 0000000 ***\n";
 	}
 
 }

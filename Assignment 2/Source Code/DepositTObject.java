@@ -31,20 +31,20 @@ public class DepositTObject extends AbsTransactionObject
 	{
 		BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));
 		
-		while(true) // account number
+		while(true) // collect valid account number from the user
 		{
 			System.out.printf("Please enter destination account number: ");
 			String tempStr = null;
 			
 			try 
 			{
-				tempStr = consoleIn.readLine();
+				tempStr = consoleIn.readLine(); // collect input from user
 			} 
 			catch (IOException e) 
 			{
-				// shouldnt get here....
+				e.printStackTrace();
 			}
-			if (!checkvalidAccountNumber(tempStr) )
+			if (!checkvalidAccountNumber(tempStr)) // check if input from user is valid for the account number
 			{
 				System.out.println("Invalid account number.");
 				continue;
@@ -52,12 +52,12 @@ public class DepositTObject extends AbsTransactionObject
 			
 			depositTo = Integer.parseInt(tempStr);
 			
-			if(!accNums.contains(depositTo))
+			if(!accNums.contains(depositTo)) // make sure account is one of the valid accounts
 			{
 				System.out.println("Account Number Entered is valid but not in Accounts List.");
 				continue;
 			}
-			break;
+			break; // have a valid account number so break out of the loop
 		}
 		
 		while(true)
@@ -65,16 +65,21 @@ public class DepositTObject extends AbsTransactionObject
 			System.out.printf("Please enter deposit amount: ");
 			try 
 			{
-				tempStr = consoleIn.readLine();
-			} catch (IOException e) {
-				// shouldnt get here....
+				tempStr = consoleIn.readLine(); // collect input from user
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
 			}
-			int validAmount = validateMonetaryValue(tempStr, depositTo);
+			
+			int validAmount = validateMonetaryValue(tempStr, depositTo); // make sure we are depositing a valid amount to the account
+			
 			if (validAmount == -1)
 			{
-				continue;
+				continue; // we did not get a valid deposit value so get user to re enter amount to deposit
 			}
-			break;
+			depositAmt = validAmount;
+			break; // we have a valid deposit amount so break out of the loop
 		}
 	}
 
@@ -87,7 +92,7 @@ public class DepositTObject extends AbsTransactionObject
 	@Override
 	public String outString() 
 	{
-		return "DEP " + depositTo + " " + depositAmt + " 0000000 ***";
+		return "DEP " + depositTo + " " + depositAmt + " 0000000 ***\n";
 	}
 
 	
@@ -164,14 +169,14 @@ public class DepositTObject extends AbsTransactionObject
             
             int sessionAmount = 0; //init session amount
             
-            //we must check each transaction in this session to get withdraw amount for FROM account
+            //we must check each transaction in this session to get deposit amount for FROM account
             for (int i = 1; i < transactions.length; i++) {
                 
                 String current = (String)transactions[i]; //current transaction
                 String[] segments = current.split(" "); //split the transaction summary at white space
                 
-                //check to see if the transaction code is transfer and if the FROM account matches
-                if(segments[0].equals("WDR") && segments[3].equals("" + accFrom)){
+                //check to see if the transaction code is DEP and if the FROM account matches
+                if(segments[0].equals("DEP") && segments[1].equals("" + accFrom)){
                     
                     //add the transaction to the session amount
                     sessionAmount += Integer.parseInt(segments[2]);
