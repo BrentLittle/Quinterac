@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 
-public class DepositTObject extends AbsTransactionObject
+public class DepositTObject extends TransactionObject
 {
 	
 	private int outState;

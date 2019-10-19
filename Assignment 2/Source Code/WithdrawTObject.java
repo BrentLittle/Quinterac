@@ -5,7 +5,7 @@ import java.util.*;
  *
  * @author Matt Denny - 16mmmd1 - 20065190
  */
-public class WithdrawTObject extends AbsTransactionObject {
+public class WithdrawTObject extends TransactionObject {
         
     private int outState;
     private String outString;

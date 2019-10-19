@@ -1,11 +1,12 @@
 
-public class LogoutTObject extends AbsTransactionObject
+public class LogoutTObject extends TransactionObject
 {
 	
 	private int outState;
 	
 	public LogoutTObject(int state) throws OutOfOrderException 
 	{
+		super();
 		if(state == 0 || state == 3) 
 		{
 			throw new OutOfOrderException("cant logout before login");

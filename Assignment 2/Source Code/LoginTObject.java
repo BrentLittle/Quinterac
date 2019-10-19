@@ -1,20 +1,20 @@
 import java.io.*;
 
-public class LoginTObject extends AbsTransactionObject {
+public class LoginTObject extends TransactionObject {
 	
-	private int outState;
+	BufferedReader consoleIn;
 	
-	public LoginTObject(int state) throws OutOfOrderException{
+	public LoginTObject(BufferedReader in, FrontendObject fe) throws OutOfOrderException{
+		super(in, fe);
 		if (state == 1 || state == 2) throw new OutOfOrderException("Already logged in.");
-		outState = -1;
 	}
 	
 	//example of how this interacts with session and the main loop body
 
 	@Override
 	public void process() {
-		BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));
-		while (outState < 0) {
+		
+		while (state < 0) {
 			System.out.printf("Please enter login mode: ");
 			String mode = null;
 			try {
@@ -24,10 +24,10 @@ public class LoginTObject extends AbsTransactionObject {
 			}	
 			switch (mode) {
 			case "machine":
-				outState = 1;
+				state = 1;
 				break;
 			case "agent":
-				outState = 2;
+				state = 2;
 				break;
 			default:
 				System.out.printf("Please enter 'machine' or 'agent'. ");
@@ -38,7 +38,7 @@ public class LoginTObject extends AbsTransactionObject {
 
 	@Override
 	public int getState() {
-		return outState;
+		return state;
 	}
 
 	@Override

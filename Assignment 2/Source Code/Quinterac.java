@@ -58,7 +58,8 @@ public class Quinterac {
 			} catch (IOException e) {
 				// shouldn't get here....
 			}
-			AbsTransactionObject currentT = null;
+			
+			TransactionObject currentT = null;
 			
 			switch (commands.indexOf(transaction)) 
 			{
@@ -66,7 +67,7 @@ public class Quinterac {
 			case 0: // Login //Good
 				try 
 				{
-					currentT = new LoginTObject(session.getState());
+					currentT = new LoginTObject(consoleIn, session);
 				} catch (OutOfOrderException e) {
 					System.out.printf(e.getMessage());
 					break;
@@ -95,7 +96,7 @@ public class Quinterac {
 			case 2: // createAcc
 				try 
 				{
-					currentT = new CreateTObject(session.getState(), session.getAccountList());
+					currentT = new CreateTObject(consoleIn, session);
 				} 
 				catch (OutOfOrderException e) 
 				{
@@ -111,7 +112,7 @@ public class Quinterac {
 			case 3: // deleteAcct
 				try 
 				{
-					currentT = new DeleteAcctTObject(session.getState(), session.getAccountList());
+					currentT = new DeleteAcctTObject(consoleIn, session);
 				} 
 				catch (OutOfOrderException e) 
 				{
@@ -126,7 +127,7 @@ public class Quinterac {
 			case 4: // deposit
 				try
 			     {
-			    	 currentT = new DepositTObject(session.getState(),session.getAccountList(), session);
+			    	 currentT = new DepositTObject(consoleIn, session);
                 } 
 			     catch (OutOfOrderException e) 
 			     {
@@ -142,7 +143,7 @@ public class Quinterac {
 			case 5: // withdraw
 			     try
 			     {
-			    	 currentT = new WithdrawTObject(session.getState(), consoleIn, session);
+			    	 currentT = new WithdrawTObject(consoleIn, session);
                  } 
 			     catch (OutOfOrderException e) 
 			     {
@@ -159,7 +160,7 @@ public class Quinterac {
 			case 6: // transfer
 			    try
 			    {
-			    	currentT = new TransferTObject(session.getState(), consoleIn, session);
+			    	currentT = new TransferTObject(consoleIn, session);
                 } 
 			    catch (OutOfOrderException e) 
 			    {

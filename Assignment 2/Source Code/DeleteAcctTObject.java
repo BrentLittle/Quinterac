@@ -3,7 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-public class DeleteAcctTObject extends AbsTransactionObject
+public class DeleteAcctTObject extends TransactionObject
 {
 	private int outState;
 	private int state;
