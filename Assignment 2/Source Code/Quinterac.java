@@ -64,14 +64,14 @@ public class Quinterac
 			} catch (IOException e) {
 				// shouldn't get here....
 			}
-			AbsTransactionObject currentT = null;
+			Transaction currentT = null;
 			
 			switch (commands.indexOf(transaction))  // get index of the transaction from the ArrayList at the top of this class
 			{
 			case 0: // Login Transaction
 				try 
 				{
-					currentT = new LoginTObject(session.getState()); // create a Login Object
+					currentT = new TransactionLogin(consoleIn, session.getState()); // create a Login Object
 				} 
 				catch (OutOfOrderException e) 
 				{
@@ -87,7 +87,7 @@ public class Quinterac
 			case 1: // Logout Transaction
 				try 
 				{
-					currentT = new LogoutTObject(session.getState()); // create a Logout Object
+					currentT = new TransactionLogout(session.getState()); // create a Logout Object
 				} 
 				catch (OutOfOrderException e) 
 				{
@@ -96,7 +96,7 @@ public class Quinterac
 				}
 				currentT.process(); // Process the Logout transaction
 				session.setState(currentT.getState()); // set the state of the Frontend Object to the expected outcome after process was run
-				session.stackPush(currentT.outString()); // push the output string to the stack to print to the Output File
+				session.stackPush(((WritableTransaction)currentT).getTransactionSummary()); // push the output string to the stack to print to the Output File
 			    break;
 			
 			
@@ -104,7 +104,7 @@ public class Quinterac
 			case 2: // Create Account Transaction
 				try 
 				{
-					currentT = new CreateTObject(session.getState(), session.getAccountList()); // create a Create Account Object
+					currentT = new TransactionCreateAcct(consoleIn, session); // create a Create Account Object
 				} 
 				catch (OutOfOrderException e) 
 				{
@@ -112,7 +112,7 @@ public class Quinterac
 					break;
 				}
 				currentT.process(); // Process the Create Account Transaction
-				session.stackPush(currentT.outString()); // push the output string to the stack to print to the Output File
+				session.stackPush(((WritableTransaction)currentT).getTransactionSummary()); // push the output string to the stack to print to the Output File
 				break;									 // We do not need to worry about the state change since we have already 
 														 // logged in and it can only change when we logout
 			
@@ -122,7 +122,7 @@ public class Quinterac
 			case 3: // Delete Account Transaction
 				try 
 				{
-					currentT = new DeleteAcctTObject(session.getState(), session.getAccountList()); // create a Delete Account Object
+					currentT = new TransactionDeleteAcct(consoleIn, session); // create a Delete Account Object
 				} 
 				catch (OutOfOrderException e) 
 				{
@@ -130,7 +130,7 @@ public class Quinterac
 					break;
 				}
 				currentT.process(); // Process the Delete Account Transaction
-				session.stackPush(currentT.outString()); // push the output string to the stack to print to the Output File
+				session.stackPush(((WritableTransaction)currentT).getTransactionSummary()); // push the output string to the stack to print to the Output File
 				break;  								 // We do not need to worry about the state change since we have already 
 														 // logged in and it can only change when we logout
 				
@@ -139,7 +139,7 @@ public class Quinterac
 			case 4: // Deposit Transaction
 				try
 			     {
-			    	 currentT = new DepositTObject(session.getState(),session.getAccountList(), session); // Create a Deposit Object
+			    	 currentT = new TransactionDeposit(consoleIn, session); // Create a Deposit Object
                 } 
 			     catch (OutOfOrderException e) 
 			     {
@@ -147,7 +147,7 @@ public class Quinterac
                     break;
                 }
 				currentT.process(); // Process the Deposit Transaction
-				session.stackPush(currentT.outString()); // push the output string to the stack to print to the Output File
+				session.stackPush(((WritableTransaction)currentT).getTransactionSummary()); // push the output string to the stack to print to the Output File
 				break;  								 // We do not need to worry about the state change since we have already 
 														 // logged in and it can only change when we logout
 			
@@ -156,7 +156,7 @@ public class Quinterac
 			case 5: // Withdraw Transaction
 			     try
 			     {
-			    	 currentT = new WithdrawTObject(session.getState(), consoleIn, session); // Create a Withdraw Object
+			    	 currentT = new TransactionWithdraw(consoleIn, session); // Create a Withdraw Object
                  } 
 			     catch (OutOfOrderException e) 
 			     {
@@ -164,7 +164,7 @@ public class Quinterac
                      break;
                  }
 			     currentT.process(); // Process the Withdraw Transaction
-				 session.stackPush(currentT.outString()); // push the output string to the stack to print to the Output File
+				 session.stackPush(((WritableTransaction)currentT).getTransactionSummary()); // push the output string to the stack to print to the Output File
 			     break;  								  // We do not need to worry about the state change since we have already 
 														  // logged in and it can only change when we logout
 			
@@ -173,7 +173,7 @@ public class Quinterac
 			case 6: // Transfer Transaction
 			    try
 			    {
-			    	currentT = new TransferTObject(session.getState(), consoleIn, session); // Create a Transfer Object
+			    	currentT = new TransactionTransfer(consoleIn, session); // Create a Transfer Object
                 } 
 			    catch (OutOfOrderException e) 
 			    {
@@ -181,7 +181,7 @@ public class Quinterac
                     break;
                 }
 			    currentT.process(); // Process the Transfer Transaction
-				session.stackPush(currentT.outString()); // push the output string to the stack to print to the Output File
+				session.stackPush(((WritableTransaction)currentT).getTransactionSummary()); // push the output string to the stack to print to the Output File
 				break;  								 // We do not need to worry about the state change since we have already 
 														 // logged in and it can only change when we logout
 			
