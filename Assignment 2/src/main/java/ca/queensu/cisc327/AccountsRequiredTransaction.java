@@ -1,6 +1,6 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.ArrayList;
+package main.java.ca.queensu.cisc327;
+
+import java.util.*;
 
 public abstract class AccountsRequiredTransaction extends WritableTransaction{
 	
@@ -13,22 +13,14 @@ public abstract class AccountsRequiredTransaction extends WritableTransaction{
      * @param confirmMessage String that will be displayed when the account number is confirmed
      * @return the verified account number as an int
      */
-	protected int getAccountNumber(BufferedReader in, String reEnterMessage, String confirmMessage){
+	protected int getAccountNumber(Scanner in, String reEnterMessage, String confirmMessage){
         
         String input;
         int num;
         
         while(true){
             
-            //get account number from the input
-            try{
-                input = in.readLine();
-            } catch (IOException e){
-                //You really shouldnt be able to get here but we will still throw an error
-                System.out.println("Unknown IOException..."
-                        + "\n" + reEnterMessage);
-                continue;
-            }
+            input = in.nextLine();
             
             if(input.equals(exitString)) {
             	return exitCode; //return the exit code
@@ -60,21 +52,14 @@ public abstract class AccountsRequiredTransaction extends WritableTransaction{
      * @param confirmMessage String that will be displayed when the account number is confirmed
      * @return the verified account number as an int
      */
-    protected int getAccountNumber(BufferedReader in, int last, String reEnterMessage, String confirmMessage){
+    protected int getAccountNumber(Scanner in, int last, String reEnterMessage, String confirmMessage){
         String input;
         int num;
         
         while(true){
             
             //get account number from the input
-            try{
-                input = in.readLine();
-            } catch (IOException e){
-                //You really shouldnt be able to get here but we will still throw an error
-                System.out.println("Unknown IOException..."
-                        + "\n" + reEnterMessage);
-                continue;
-            }
+        	input = in.nextLine();
             
             if(input.equals(exitString)) {
             	return exitCode; //return the exit code
@@ -105,7 +90,7 @@ public abstract class AccountsRequiredTransaction extends WritableTransaction{
      * @param confirmMessage String that will be displayed when the account name is confirmed
      * @return the verified account number name as a String
      */
-    protected String getAccountName(BufferedReader in, String reEnterMessage, String confirmMessage) {
+    protected String getAccountName(Scanner in, String reEnterMessage, String confirmMessage) {
     	
     	String input;
         String name;
@@ -113,14 +98,7 @@ public abstract class AccountsRequiredTransaction extends WritableTransaction{
         while(true){
             
             //get account number from the input
-            try{
-                input = in.readLine();
-            } catch (IOException e){
-                //You really shouldnt be able to get here but we will still throw an error
-                System.out.println("Unknown IOException..."
-                        + "\n" + reEnterMessage);
-                continue;
-            }
+        	input = in.nextLine();
             
             if(input.equals(exitString)) {
             	return exitString; //return the exit string to indicate the user wants to cancel transaction

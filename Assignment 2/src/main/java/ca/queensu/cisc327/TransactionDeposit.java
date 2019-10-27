@@ -1,9 +1,11 @@
-import java.io.*;
+package main.java.ca.queensu.cisc327;
+
+import java.util.*;
 
 public class TransactionDeposit extends SummaryRequiredTransaction
 {
 	
-	public TransactionDeposit(BufferedReader in, FrontendObject feObject) throws OutOfOrderException{
+	public TransactionDeposit(Scanner in, FrontendObject feObject) throws OutOfOrderException{
     	
     	state = feObject.getState();
         if(state == 0 || state == 3) throw new OutOfOrderException("Cannot deposit while logged out.");

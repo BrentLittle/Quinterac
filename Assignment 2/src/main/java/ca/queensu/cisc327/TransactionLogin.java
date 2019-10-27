@@ -1,8 +1,10 @@
-import java.io.*;
+package main.java.ca.queensu.cisc327;
+
+import java.util.*;
 
 public class TransactionLogin extends Transaction {
 	
-	public TransactionLogin(BufferedReader in, int state) throws OutOfOrderException{
+	public TransactionLogin(Scanner in, int state) throws OutOfOrderException{
 		if (state == 1 || state == 2) throw new OutOfOrderException("Already logged in.");
 		this.state = -1;
 		consoleIn = in;
@@ -15,11 +17,9 @@ public class TransactionLogin extends Transaction {
 		while (state < 0) {
 			System.out.printf("Please enter login mode: ");
 			String mode = null;
-			try {
-				mode = consoleIn.readLine().toLowerCase();
-			} catch (IOException e) {
-				// shouldnt get here....
-			}	
+			
+			mode = consoleIn.nextLine().toLowerCase();
+			
 			switch (mode) {
 			case "machine":
 				state = 1;

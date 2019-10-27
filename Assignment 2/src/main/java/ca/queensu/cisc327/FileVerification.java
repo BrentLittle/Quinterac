@@ -1,6 +1,7 @@
+package main.java.ca.queensu.cisc327;
+
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 // This class when given a valid file name for an accounts List file will determine if all of the lines in the file
 // meet the requirements of valid account numbers and an ending entry of 0000000
@@ -39,22 +40,26 @@ public class FileVerification {
 		    	if(currLine.length() != 7) // accountNum was not 7 digits in length
 		    	{
 		    		fileValid = false;
+		    		reader.close();
 		    		return;
 		    	}
 		    	else if ( !(currLine.matches("[0-9]+")) ) // account number contains non-numeric characters
 		    	{
 		    		fileValid = false;
+		    		reader.close();
 		    		return;
 		    	}
 		    	else if (currLine.startsWith("0") && !(currLine.equals("0000000"))) // starts with a 0 but is not the ending line of 0000000
 		    	{
 		    		fileValid = false;
+		    		reader.close();
 		    		return;
 		    	}
 		    	
 		    	if (checkDuplicate(Integer.parseInt(currLine))) // account has already been added to the list so we have a duplicate account in file
 		    	{
 		    		fileValid = false;
+		    		reader.close();
 		    		return;
 		    	}
 		    	
@@ -65,15 +70,16 @@ public class FileVerification {
 		    
 		    if ( !(lastLine.equals("0000000")) ) {  // make sure that if the last Line in the file is not 0000000 then it is false
 	    		fileValid = false;
+	    		reader.close();
 	    		return;
 	    	}		    
-		    else {
-		    	fileValid = true;  // if we reach here then we have a valid account 
-		    }
 		    
+		    fileValid = true;  // if we reach here then we have a valid account 
 		    reader.close();
 		}
-		catch (Exception e) {e.printStackTrace();}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public boolean getFileValid()

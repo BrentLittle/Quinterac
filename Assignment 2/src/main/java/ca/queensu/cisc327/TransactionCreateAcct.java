@@ -1,8 +1,10 @@
-import java.io.BufferedReader;
+package main.java.ca.queensu.cisc327;
+
+import java.util.*;
 
 public class TransactionCreateAcct extends AccountsRequiredTransaction {
 	
-public TransactionCreateAcct(BufferedReader in, FrontendObject feObject) throws OutOfOrderException{
+public TransactionCreateAcct(Scanner in, FrontendObject feObject) throws OutOfOrderException{
     	
     	state = feObject.getState();
     	

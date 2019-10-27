@@ -1,4 +1,5 @@
-import java.io.*;
+package main.java.ca.queensu.cisc327;
+
 import java.util.*;
 
 /**
@@ -7,7 +8,7 @@ import java.util.*;
  */
 public class TransactionWithdraw extends SummaryRequiredTransaction {
     
-    public TransactionWithdraw(BufferedReader in, FrontendObject feObject) throws OutOfOrderException{
+    public TransactionWithdraw(Scanner in, FrontendObject feObject) throws OutOfOrderException{
     	
     	state = feObject.getState();
         if(state == 0 || state == 3) throw new OutOfOrderException("Cannot transfer while logged out.");

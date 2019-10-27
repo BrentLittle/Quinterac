@@ -1,5 +1,6 @@
-import java.io.BufferedReader;
-import java.io.IOException;
+package main.java.ca.queensu.cisc327;
+
+import java.util.*;
 
 public abstract class SummaryRequiredTransaction extends AccountsRequiredTransaction {
 
@@ -14,21 +15,14 @@ public abstract class SummaryRequiredTransaction extends AccountsRequiredTransac
      * @param confirmMessage String that will be displayed when the amount is confirmed
      * @return the verified amount as an int
      */
-    protected int getAmount(BufferedReader in, int checkAcc, String reEnterMessage, String confirmMessage){
+    protected int getAmount(Scanner in, int checkAcc, String reEnterMessage, String confirmMessage){
         String input;
         int num;
         
         while(true){
             
             //read in the amount from the input
-            try{
-                input = in.readLine();
-            } catch (IOException e){
-                //should not get here.
-                System.out.println("Unknown IOException..."
-                        + "\n" + reEnterMessage);
-                continue;
-            }
+        	input = in.nextLine();
             
             if(input.equals(exitString)) {
             	return exitCode; //return the exit code

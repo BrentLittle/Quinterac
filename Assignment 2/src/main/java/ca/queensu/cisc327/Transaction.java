@@ -1,4 +1,6 @@
-import java.io.BufferedReader;
+package main.java.ca.queensu.cisc327;
+
+import java.util.*;
 
 /*
  * All concrete transaction objects should extend this
@@ -6,7 +8,7 @@ import java.io.BufferedReader;
  */
 public abstract class Transaction {
 	
-	protected BufferedReader consoleIn;
+	protected Scanner consoleIn;
 	protected int state;
 	
 	protected final String exitString = "--exit";

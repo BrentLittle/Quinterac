@@ -1,3 +1,8 @@
+package main.java.ca.queensu.cisc327;
+
+import java.io.*;
+import java.util.*;
+
 /* 
  * Quinterac Banking System Front End
  * 
@@ -7,9 +12,6 @@
  * 
  * Compiled to Java SE 10 
  */
-
-import java.io.*;
-import java.util.*;
 
 public class Quinterac 
 {
@@ -37,7 +39,7 @@ public class Quinterac
 			System.out.println(e.getMessage());
 		}
 
-		BufferedReader consoleIn = new BufferedReader(new InputStreamReader(System.in));
+		Scanner consoleIn = new Scanner(System.in);
 		
 		while (session.getState() >= 0) // when in a logged in state
 		{
@@ -57,33 +59,31 @@ public class Quinterac
 			
 			System.out.printf("Please enter a transaction: ");
 			
-			String transaction = null;
-			try 
-			{
-				transaction = consoleIn.readLine().toLowerCase(); // get input from the user to collect what transaction they would like to do
-			} catch (IOException e) {
-				// shouldn't get here....
-			}
-			Transaction currentT = null;
+			String input = null;
 			
-			if(transaction.equals("--quit")) {
+			input = consoleIn.nextLine().toLowerCase(); // get input from the user to collect what transaction they would like to do
+			
+			Transaction transaction = null;
+			
+			if(input.equals("--quit")) {
 				terminateProgram(session);
+				return;
 			}
 			
-			switch (commands.indexOf(transaction))  // get index of the transaction from the ArrayList at the top of this class
+			switch (commands.indexOf(input))  // get index of the transaction from the ArrayList at the top of this class
 			{
 			case 0: // Login Transaction
 				try 
 				{
-					currentT = new TransactionLogin(consoleIn, session.getState()); // create a Login Object
+					transaction = new TransactionLogin(consoleIn, session.getState()); // create a Login Object
 				} 
 				catch (OutOfOrderException e) 
 				{
-					System.out.printf(e.getMessage());
+					System.out.println(e.getMessage());
 					break;
 				}
-				currentT.process();	// Process the login Transaction
-				session.setState(currentT.getState()); // set the state of the Frontend Object to the expected outcome after process was run
+				transaction.process();	// Process the login Transaction
+				session.setState(transaction.getState()); // set the state of the Frontend Object to the expected outcome after process was run
 				break;
 			       
 			
@@ -91,16 +91,16 @@ public class Quinterac
 			case 1: // Logout Transaction
 				try 
 				{
-					currentT = new TransactionLogout(session.getState()); // create a Logout Object
+					transaction = new TransactionLogout(session.getState()); // create a Logout Object
 				} 
 				catch (OutOfOrderException e) 
 				{
-					System.out.printf(e.getMessage());
+					System.out.println(e.getMessage());
 					break;
 				}
-				currentT.process(); // Process the Logout transaction
-				session.setState(currentT.getState()); // set the state of the Frontend Object to the expected outcome after process was run
-				session.stackPush(((WritableTransaction)currentT).getTransactionSummary()); // push the output string to the stack to print to the Output File
+				transaction.process(); // Process the Logout transaction
+				session.setState(transaction.getState()); // set the state of the Frontend Object to the expected outcome after process was run
+				session.stackPush(((WritableTransaction)transaction).getTransactionSummary()); // push the output string to the stack to print to the Output File
 			    break;
 			
 			
@@ -108,15 +108,15 @@ public class Quinterac
 			case 2: // Create Account Transaction
 				try 
 				{
-					currentT = new TransactionCreateAcct(consoleIn, session); // create a Create Account Object
+					transaction = new TransactionCreateAcct(consoleIn, session); // create a Create Account Object
 				} 
 				catch (OutOfOrderException e) 
 				{
-					System.out.printf(e.getMessage());
+					System.out.println(e.getMessage());
 					break;
 				}
-				currentT.process(); // Process the Create Account Transaction
-				session.stackPush(((WritableTransaction)currentT).getTransactionSummary()); // push the output string to the stack to print to the Output File
+				transaction.process(); // Process the Create Account Transaction
+				session.stackPush(((WritableTransaction)transaction).getTransactionSummary()); // push the output string to the stack to print to the Output File
 				break;									 // We do not need to worry about the state change since we have already 
 														 // logged in and it can only change when we logout
 			
@@ -126,15 +126,15 @@ public class Quinterac
 			case 3: // Delete Account Transaction
 				try 
 				{
-					currentT = new TransactionDeleteAcct(consoleIn, session); // create a Delete Account Object
+					transaction = new TransactionDeleteAcct(consoleIn, session); // create a Delete Account Object
 				} 
 				catch (OutOfOrderException e) 
 				{
-					System.out.printf(e.getMessage());
+					System.out.println(e.getMessage());
 					break;
 				}
-				currentT.process(); // Process the Delete Account Transaction
-				session.stackPush(((WritableTransaction)currentT).getTransactionSummary()); // push the output string to the stack to print to the Output File
+				transaction.process(); // Process the Delete Account Transaction
+				session.stackPush(((WritableTransaction)transaction).getTransactionSummary()); // push the output string to the stack to print to the Output File
 				break;  								 // We do not need to worry about the state change since we have already 
 														 // logged in and it can only change when we logout
 				
@@ -143,15 +143,15 @@ public class Quinterac
 			case 4: // Deposit Transaction
 				try
 			     {
-			    	 currentT = new TransactionDeposit(consoleIn, session); // Create a Deposit Object
+			    	 transaction = new TransactionDeposit(consoleIn, session); // Create a Deposit Object
                 } 
 			     catch (OutOfOrderException e) 
 			     {
                     System.out.println(e.getMessage());
                     break;
                 }
-				currentT.process(); // Process the Deposit Transaction
-				session.stackPush(((WritableTransaction)currentT).getTransactionSummary()); // push the output string to the stack to print to the Output File
+				transaction.process(); // Process the Deposit Transaction
+				session.stackPush(((WritableTransaction)transaction).getTransactionSummary()); // push the output string to the stack to print to the Output File
 				break;  								 // We do not need to worry about the state change since we have already 
 														 // logged in and it can only change when we logout
 			
@@ -160,15 +160,15 @@ public class Quinterac
 			case 5: // Withdraw Transaction
 			     try
 			     {
-			    	 currentT = new TransactionWithdraw(consoleIn, session); // Create a Withdraw Object
+			    	 transaction = new TransactionWithdraw(consoleIn, session); // Create a Withdraw Object
                  } 
 			     catch (OutOfOrderException e) 
 			     {
                      System.out.println(e.getMessage());
                      break;
                  }
-			     currentT.process(); // Process the Withdraw Transaction
-				 session.stackPush(((WritableTransaction)currentT).getTransactionSummary()); // push the output string to the stack to print to the Output File
+			     transaction.process(); // Process the Withdraw Transaction
+				 session.stackPush(((WritableTransaction)transaction).getTransactionSummary()); // push the output string to the stack to print to the Output File
 			     break;  								  // We do not need to worry about the state change since we have already 
 														  // logged in and it can only change when we logout
 			
@@ -177,21 +177,21 @@ public class Quinterac
 			case 6: // Transfer Transaction
 			    try
 			    {
-			    	currentT = new TransactionTransfer(consoleIn, session); // Create a Transfer Object
+			    	transaction = new TransactionTransfer(consoleIn, session); // Create a Transfer Object
                 } 
 			    catch (OutOfOrderException e) 
 			    {
                     System.out.println(e.getMessage());
                     break;
                 }
-			    currentT.process(); // Process the Transfer Transaction
-				session.stackPush(((WritableTransaction)currentT).getTransactionSummary()); // push the output string to the stack to print to the Output File
+			    transaction.process(); // Process the Transfer Transaction
+				session.stackPush(((WritableTransaction)transaction).getTransactionSummary()); // push the output string to the stack to print to the Output File
 				break;  								 // We do not need to worry about the state change since we have already 
 														 // logged in and it can only change when we logout
 			
 			
 			default: // Unknown Transaction
-				System.out.println("Unrecognized transaction: " + transaction);
+				System.out.println("Unrecognized transaction: " + input);
 				continue; // get user to re-enter transaction they would like to perform
 			}
 		}
@@ -206,8 +206,6 @@ public class Quinterac
 		{
 			System.out.println("Error writing to file...");
 		}
-		
-		System.exit(0);
 	}
 	
 }

@@ -1,4 +1,6 @@
-import java.io.BufferedReader;
+package main.java.ca.queensu.cisc327;
+
+import java.util.*;
 
 /**
 *
@@ -7,7 +9,7 @@ import java.io.BufferedReader;
 
 public class TransactionDeleteAcct extends AccountsRequiredTransaction
 {
-	public TransactionDeleteAcct(BufferedReader in, FrontendObject feObject) throws OutOfOrderException{
+	public TransactionDeleteAcct(Scanner in, FrontendObject feObject) throws OutOfOrderException{
     	
     	state = feObject.getState();
         if(state == 0 || state == 3) throw new OutOfOrderException("Cannot delete account while logged out.");
