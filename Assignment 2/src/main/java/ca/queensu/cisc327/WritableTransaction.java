@@ -1,4 +1,4 @@
-package main.java.ca.queensu.cisc327;
+package ca.queensu.cisc327;
 
 public abstract class WritableTransaction extends Transaction {
 	

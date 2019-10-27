@@ -1,4 +1,4 @@
-package main.java.ca.queensu.cisc327;
+package ca.queensu.cisc327;
 
 import java.io.*;
 import java.util.*;

@@ -1,4 +1,4 @@
-package main.java.ca.queensu.cisc327;
+package ca.queensu.cisc327;
 
 public class TransactionLogout extends WritableTransaction
 {
@@ -14,7 +14,7 @@ public class TransactionLogout extends WritableTransaction
 	@Override
 	public void process() 
 	{
-		state = 3;
+		state = 0;
 	}
 	
 	@Override

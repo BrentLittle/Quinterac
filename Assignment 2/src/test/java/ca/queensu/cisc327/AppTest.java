@@ -1,4 +1,4 @@
-package test.java.ca.queensu.cisc327;
+package ca.queensu.cisc327;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,9 +13,12 @@ import java.util.List;
 
 import org.junit.*;
 
-import main.java.ca.queensu.cisc327.Quinterac;
+import ca.queensu.cisc327.Quinterac;
 
 public class AppTest {
+	
+	private String outFilePath = "src/test/java/ca/queensu/cisc327/TransactionSummaryFile.txt";
+	private String inFilePath = "src/test/java/ca/queensu/cisc327/ValidAccountsFile.txt";
 	
 	@Test
     public void R1T1() throws Exception {
@@ -83,6 +86,76 @@ public class AppTest {
         		, "Please enter login mode: ", "Please enter a transaction: ", "Already logged in.", "Please enter a transaction: "));
     }
 	
+	@Test
+    public void R5T1() throws Exception {
+        runTest(Arrays.asList("login", "machine", "logout", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Session completed, output printed to " + outFilePath, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R5T2() throws Exception {
+        runTest(Arrays.asList("login", "agent", "logout", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Session completed, output printed to " + outFilePath, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R6T1() throws Exception {
+        runTest(Arrays.asList("login", "machine", "logout", "logout", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Session completed, output printed to " + outFilePath, "Please enter a transaction: "
+        		, "Cannot logout before login.", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R6T2() throws Exception {
+        runTest(Arrays.asList("login", "machine", "logout", "createacc", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Session completed, output printed to " + outFilePath, "Please enter a transaction: "
+        		, "Cannot create account while logged out.", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R6T3() throws Exception {
+        runTest(Arrays.asList("login", "machine", "logout", "deleteacc", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Session completed, output printed to " + outFilePath, "Please enter a transaction: "
+        		, "Cannot delete account while logged out.", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R6T4() throws Exception {
+        runTest(Arrays.asList("login", "machine", "logout", "deposit", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Session completed, output printed to " + outFilePath, "Please enter a transaction: "
+        		, "Cannot deposit while logged out.", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R6T5() throws Exception {
+        runTest(Arrays.asList("login", "machine", "logout", "withdraw", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Session completed, output printed to " + outFilePath, "Please enter a transaction: "
+        		, "Cannot withdraw while logged out.", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R6T6() throws Exception {
+        runTest(Arrays.asList("login", "machine", "logout", "transfer", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Session completed, output printed to " + outFilePath, "Please enter a transaction: "
+        		, "Cannot transfer while logged out.", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R6T7() throws Exception {
+        runTest(Arrays.asList("login", "machine", "logout", "dog", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Session completed, output printed to " + outFilePath, "Please enter a transaction: "
+        		, "Unrecognized transaction: dog", "Please enter a transaction: "));
+    }
+	
 	/*
 	@Test
     public void R2T1() throws Exception {
@@ -93,8 +166,7 @@ public class AppTest {
     public void runTest(List<String> terminal_input, List<String> expected_terminal_tails) throws Exception{
     	
     	// setup parameters for the program to run
-        String[] args = { "C:\\Users\\Denny\\Documents\\Quinterac\\Assignment 2\\src\\test\\java\\ca\\queensu\\cisc327\\ValidAccountsFile.txt"
-        		, "C:\\Users\\Denny\\Documents\\Quinterac\\Assignment 2\\src\\test\\java\\ca\\queensu\\cisc327\\TransactionSummary.txt" };
+        String[] args = { inFilePath, outFilePath };
         
         //setup user input
         String userInput = String.join(System.lineSeparator(), terminal_input);
