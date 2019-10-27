@@ -9,17 +9,17 @@ public abstract class AccountsRequiredTransaction extends WritableTransaction{
 	/**
      * Handles input for the account number
      * @param in BufferedReader to read the input from
-     * @param reEnterMessage String that will be displayed when the user must reenter their input
-     * @param confirmMessage String that will be displayed when the account number is confirmed
      * @return the verified account number as an int
      */
-	protected int getAccountNumber(Scanner in, String reEnterMessage, String confirmMessage){
+	protected int getAccountNumber(Scanner in){
         
         String input;
         int num;
         
         while(true){
             
+        	System.out.println("Please enter account number:");
+        	
             input = in.nextLine();
             
             if(input.equals(exitString)) {
@@ -33,13 +33,11 @@ public abstract class AccountsRequiredTransaction extends WritableTransaction{
             if(num < 0){
             	
             	handleAccountNumberError(num);
-            	
-                System.out.printf(reEnterMessage);
                 continue;
             }
             
             //if there is no error then we return the account number
-            System.out.println(confirmMessage);
+            System.out.println("Account number confirmed...");
             return num;
         }
     }
@@ -48,16 +46,16 @@ public abstract class AccountsRequiredTransaction extends WritableTransaction{
      * Handles input for the account number
      * @param in BufferedReader to read the input from
      * @param last int that was the last account number used
-     * @param reEnterMessage String that will be displayed when the user must reenter their input
-     * @param confirmMessage String that will be displayed when the account number is confirmed
      * @return the verified account number as an int
      */
-    protected int getAccountNumber(Scanner in, int last, String reEnterMessage, String confirmMessage){
+    protected int getAccountNumber(Scanner in, int last){
         String input;
         int num;
         
         while(true){
             
+        	System.out.println("Please enter account number:");
+        	
             //get account number from the input
         	input = in.nextLine();
             
@@ -72,13 +70,11 @@ public abstract class AccountsRequiredTransaction extends WritableTransaction{
             if(num < 0){
             	
             	handleAccountNumberError(num);
-            	
-                System.out.printf(reEnterMessage);
                 continue;
             }
             
             //if there is no error then we return the account number
-            System.out.println(confirmMessage);
+            System.out.println("Account number confirmed...");
             return num;
         }
     }
@@ -86,17 +82,16 @@ public abstract class AccountsRequiredTransaction extends WritableTransaction{
     /**
      * Handles input for the account number
      * @param in BufferedReader to read the input from
-     * @param reEnterMessage String that will be displayed when the user must reenter their input
-     * @param confirmMessage String that will be displayed when the account name is confirmed
      * @return the verified account number name as a String
      */
-    protected String getAccountName(Scanner in, String reEnterMessage, String confirmMessage) {
+    protected String getAccountName(Scanner in) {
     	
     	String input;
         String name;
         
         while(true){
             
+        	System.out.println("Please enter account name:");
             //get account number from the input
         	input = in.nextLine();
             
@@ -112,12 +107,11 @@ public abstract class AccountsRequiredTransaction extends WritableTransaction{
             	
             	handleAccountNameError(name);
             	
-                System.out.printf(reEnterMessage);
                 continue;
             }
             
             //if there is no error then we return the account number
-            System.out.println(confirmMessage);
+            System.out.println("Account name confirmed...");
             return name;
         }
     }

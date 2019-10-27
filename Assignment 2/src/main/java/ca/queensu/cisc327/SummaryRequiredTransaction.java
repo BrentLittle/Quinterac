@@ -15,12 +15,13 @@ public abstract class SummaryRequiredTransaction extends AccountsRequiredTransac
      * @param confirmMessage String that will be displayed when the amount is confirmed
      * @return the verified amount as an int
      */
-    protected int getAmount(Scanner in, int checkAcc, String reEnterMessage, String confirmMessage){
+    protected int getAmount(Scanner in, int checkAcc){
         String input;
         int num;
         
         while(true){
             
+        	System.out.println("Please enter amount:");
             //read in the amount from the input
         	input = in.nextLine();
             
@@ -38,13 +39,11 @@ public abstract class SummaryRequiredTransaction extends AccountsRequiredTransac
             if(num < 0){
             	
             	handleAmountError(num);
-            	
-                System.out.printf(reEnterMessage);
                 continue;
             }
             
             //if there are no errors then we can simply return the amount
-            System.out.println(confirmMessage);
+            System.out.println("Amount confirmed...");
             return num;
         }
     }

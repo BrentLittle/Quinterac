@@ -19,7 +19,7 @@ public class AppTest {
 	
 	@Test
     public void testAppR1T1() throws Exception {
-        runTest(Arrays.asList("logout","--quit"), Arrays.asList("Please enter a transaction: "
+        runTest(Arrays.asList("logout", "--quit"), Arrays.asList("Please enter a transaction: "
         		, "cant logout before login", "Please enter a transaction: "));
 
     }
@@ -27,7 +27,6 @@ public class AppTest {
     public void runTest(List<String> terminal_input, List<String> expected_terminal_tails) throws Exception{
     	
     	// setup parameters for the program to run
-        File tmpFile = File.createTempFile("temp-test", ".tmp");
         String[] args = { "C:\\Users\\Denny\\Documents\\Quinterac\\Assignment 2\\src\\test\\java\\ca\\queensu\\cisc327\\ValidAccountsFile.txt"
         		, "C:\\Users\\Denny\\Documents\\Quinterac\\Assignment 2\\src\\test\\java\\ca\\queensu\\cisc327\\transactionSummary.txt" };
         
@@ -49,9 +48,9 @@ public class AppTest {
         String[] printed_lines = outContent.toString().split("[\r\n]+");
 
         // compare the tail of the terminal outputs:
-        int diff = printed_lines.length - expected_terminal_tails.size();
+        //int diff = printed_lines.length - expected_terminal_tails.size();
         for (int i = 0; i < expected_terminal_tails.size(); ++i) {
-            assertEquals(expected_terminal_tails.get(i), printed_lines[i + diff]);
+            assertEquals(expected_terminal_tails.get(i), printed_lines[i]);
         }
     }
 

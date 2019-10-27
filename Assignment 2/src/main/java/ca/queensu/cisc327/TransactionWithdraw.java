@@ -32,15 +32,11 @@ public class TransactionWithdraw extends SummaryRequiredTransaction {
         int accFrom, amount;
         
         //input for accFrom is handled by the getAccount function
-        System.out.printf("Please enter account number to witdraw from: ");
-        accFrom = getAccountNumber(consoleIn, "Please re-enter account number: ", "Account number confirmed...");
-        
+        accFrom = getAccountNumber(consoleIn);
         if(accFrom == exitCode) return;
         
         //input for amount is handled by the getAmount function
-        System.out.printf("Please enter amount in cents to witdraw: ");
-        amount = getAmount(consoleIn, accFrom, "Please re-enter amount in cents: ", "Amount confirmed...");
-        
+        amount = getAmount(consoleIn, accFrom);
         if(accFrom == exitCode) return;
         
         System.out.println("Successfully withdrew " + amount + " cents from account "

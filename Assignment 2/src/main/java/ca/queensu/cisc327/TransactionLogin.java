@@ -15,7 +15,7 @@ public class TransactionLogin extends Transaction {
 	@Override
 	public void process() {
 		while (state < 0) {
-			System.out.printf("Please enter login mode: ");
+			System.out.println("Please enter login mode: ");
 			String mode = null;
 			
 			mode = consoleIn.nextLine().toLowerCase();

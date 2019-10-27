@@ -29,15 +29,11 @@ public class TransactionDeposit extends SummaryRequiredTransaction
         int accTo, amount;
         
         //input for accTo is handled by the getAccount function
-        System.out.printf("Please enter account number to deposit to: ");
-        accTo = getAccountNumber(consoleIn, "Please re-enter account number: ", "Account number confirmed...");
-        
+        accTo = getAccountNumber(consoleIn);
         if(accTo == exitCode) return;
         
         //input for amount is handled by the getAmount function
-        System.out.printf("Please enter amount in cents to deposit: ");
-        amount = getAmount(consoleIn, accTo, "Please re-enter amount in cents: ", "Amount confirmed...");
-        
+        amount = getAmount(consoleIn, accTo);
         if(amount == exitCode) return;
         
         System.out.println("Successfully deposited " + amount + " cents to account "

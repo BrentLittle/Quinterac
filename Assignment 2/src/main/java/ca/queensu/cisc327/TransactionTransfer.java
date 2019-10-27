@@ -31,21 +31,15 @@ public class TransactionTransfer extends SummaryRequiredTransaction {
         int accTo, accFrom, amount;
         
         //input for accTo is handled by the getAccount function
-        System.out.printf("Please enter account number to transfer to: ");
-        accTo = getAccountNumber(consoleIn, "Please re-enter account number: ", "Account number confirmed...");
-        
+        accTo = getAccountNumber(consoleIn);
         if(accTo == exitCode) return;
         
         //input for accFrom is handled by the getAccount function with accTo as the previous account
-        System.out.printf("Please enter account number to transfer from: ");
-        accFrom = getAccountNumber(consoleIn, accTo, "Please re-enter account number: ", "Account number confirmed...");
-        
+        accFrom = getAccountNumber(consoleIn, accTo);
         if(accFrom == exitCode) return;
         
         //input for amount is handled by the getAmount function
-        System.out.printf("Please enter amount in cents to transfer: ");
-        amount = getAmount(consoleIn, accFrom, "Please re-enter amount in cents: ", "Amount confirmed...");
-        
+        amount = getAmount(consoleIn, accFrom);
         if(amount == exitCode) return;
         
         System.out.println("Successfully transferred " + amount + " cents from account "

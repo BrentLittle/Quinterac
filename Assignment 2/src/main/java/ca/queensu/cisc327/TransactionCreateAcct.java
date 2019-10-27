@@ -28,15 +28,11 @@ public TransactionCreateAcct(Scanner in, FrontendObject feObject) throws OutOfOr
         String name;
         
         //input for accTo is handled by the getAccount function
-        System.out.printf("Please enter the number of the new account: ");
-        accNum = getAccountNumber(consoleIn, "Please re-enter account number: ", "Account number confirmed...");
-        
+        accNum = getAccountNumber(consoleIn);
         if(accNum == exitCode) return;
         
         //input for amount is handled by the getAmount function
-        System.out.printf("Please enter account name: ");
-        name = getAccountName(consoleIn, "Please re-enter account name: ", "Account name confirmed...");
-        
+        name = getAccountName(consoleIn);
         if(name.equals(exitString)) return;
         
         System.out.println("Successfully created account " + accNum + " belonging to "

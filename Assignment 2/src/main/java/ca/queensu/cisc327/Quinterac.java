@@ -57,7 +57,7 @@ public class Quinterac
 				System.out.println("Session completed, output printed to " + args[1]);
 			}
 			
-			System.out.printf("Please enter a transaction: ");
+			System.out.println("Please enter a transaction: ");
 			
 			String input = null;
 			
@@ -66,7 +66,7 @@ public class Quinterac
 			Transaction transaction = null;
 			
 			if(input.equals("--quit")) {
-				terminateProgram(session);
+				terminateProgram(session, consoleIn);
 				return;
 			}
 			
@@ -197,7 +197,10 @@ public class Quinterac
 		}
 	}
 	
-	public static void terminateProgram(FrontendObject session) {
+	public static void terminateProgram(FrontendObject session, Scanner scan) {
+		
+		scan.close();
+		
 		try
 		{
 			session.createSummary(); // create the Output file for all the transactions in the session
