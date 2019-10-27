@@ -59,6 +59,30 @@ public class AppTest {
         		, "Unrecognized transaction: dog", "Please enter a transaction: "));
     }
 	
+	@Test
+    public void R2T1() throws Exception {
+        runTest(Arrays.asList("login", "agent", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R3T1() throws Exception {
+        runTest(Arrays.asList("login", "machine", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R4T1() throws Exception {
+        runTest(Arrays.asList("login", "machine", "login", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: ", "Already logged in.", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R4T2() throws Exception {
+        runTest(Arrays.asList("login", "agent", "login", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: ", "Already logged in.", "Please enter a transaction: "));
+    }
+	
 	/*
 	@Test
     public void R2T1() throws Exception {
