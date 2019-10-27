@@ -273,11 +273,11 @@ public abstract class AccountsRequiredTransaction extends WritableTransaction{
     	
     	switch(error){
     		case "#1":
-    			System.out.println("Error: Account name must be between 3 and 30 characters (inclusive)");
+    			System.out.println("Error: Account name must be between 3 and 30 characters (inclusive).");
     			return;
     			
     		case "#2":
-    			System.out.println("Error: Account name cannot begin or end with white space");
+    			System.out.println("Error: Account name cannot begin or end with white space.");
     			return;
     	}
     }

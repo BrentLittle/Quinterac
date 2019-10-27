@@ -19,7 +19,7 @@ public class TransactionDeleteAcct extends AccountsRequiredTransaction
         accNums = feObject.getAccountList();
         consoleIn = in;
         
-        System.out.println("Delete Account selected...");
+        System.out.println("Delete account selected...");
     }
 
     /**
