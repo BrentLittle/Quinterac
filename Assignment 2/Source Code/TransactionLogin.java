@@ -28,7 +28,7 @@ public class TransactionLogin extends Transaction {
 				state = 2;
 				break;
 			default:
-				System.out.printf("Please enter 'machine' or 'agent'. ");
+				System.out.println("Error: Please enter 'machine' or 'agent'. ");
 				break;
 			}
 		}

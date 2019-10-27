@@ -1,4 +1,3 @@
-import java.util.*;
 import java.io.*;
 
 public class TransactionDeposit extends SummaryRequiredTransaction
@@ -31,9 +30,13 @@ public class TransactionDeposit extends SummaryRequiredTransaction
         System.out.printf("Please enter account number to deposit to: ");
         accTo = getAccountNumber(consoleIn, "Please re-enter account number: ", "Account number confirmed...");
         
+        if(accTo == exitCode) return;
+        
         //input for amount is handled by the getAmount function
         System.out.printf("Please enter amount in cents to deposit: ");
         amount = getAmount(consoleIn, accTo, "Please re-enter amount in cents: ", "Amount confirmed...");
+        
+        if(amount == exitCode) return;
         
         System.out.println("Successfully deposited " + amount + " cents to account "
                 + accTo + ".");

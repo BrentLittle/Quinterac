@@ -1,7 +1,4 @@
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
 
 /**
 *
@@ -29,23 +26,27 @@ public class TransactionDeleteAcct extends AccountsRequiredTransaction
     @Override
     public void process() {
         
-        int accNumber;
+        int accNum;
         String name;
         
         //input for accTo is handled by the getAccount function
         System.out.printf("Please enter the number of the account you wish to delete: ");
-        accNumber = getAccountNumber(consoleIn, "Please re-enter account number: ", "Account number confirmed...");
+        accNum = getAccountNumber(consoleIn, "Please re-enter account number: ", "Account number confirmed...");
+        
+        if(accNum == exitCode) return;
         
         //input for amount is handled by the getAmount function
         System.out.printf("Please enter account name: ");
         name = getAccountName(consoleIn, "Please re-enter account name: ", "Account name confirmed...");
         
-        deleteAccountFromList(accNumber);
+        if(name.equals(exitString)) return;
         
-        System.out.println("Successfully deleted account " + accNumber + " belonging to "
+        deleteAccountFromList(accNum);
+        
+        System.out.println("Successfully deleted account " + accNum + " belonging to "
                 + name + ".");
         
-        transactionSummary = "DEL " + accNumber + " " + blankAmount + " " + blankAccount + " " + name + "\n";
+        transactionSummary = "DEL " + accNum + " " + blankAmount + " " + blankAccount + " " + name + "\n";
         
     }
     

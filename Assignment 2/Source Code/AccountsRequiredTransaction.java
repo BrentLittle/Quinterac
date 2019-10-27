@@ -30,6 +30,10 @@ public abstract class AccountsRequiredTransaction extends WritableTransaction{
                 continue;
             }
             
+            if(input.equals(exitString)) {
+            	return exitCode; //return the exit code
+            }
+            
             //validate account number and store it in num
             num = validateAccNum(input);
             
@@ -72,6 +76,10 @@ public abstract class AccountsRequiredTransaction extends WritableTransaction{
                 continue;
             }
             
+            if(input.equals(exitString)) {
+            	return exitCode; //return the exit code
+            }
+            
             //validate account number and store it in num
             num = validateAccNum(input, last);
             
@@ -112,6 +120,10 @@ public abstract class AccountsRequiredTransaction extends WritableTransaction{
                 System.out.println("Unknown IOException..."
                         + "\n" + reEnterMessage);
                 continue;
+            }
+            
+            if(input.equals(exitString)) {
+            	return exitString; //return the exit string to indicate the user wants to cancel transaction
             }
             
             //validate account number and store it in num

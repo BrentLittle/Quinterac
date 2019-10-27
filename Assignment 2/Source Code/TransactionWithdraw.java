@@ -34,11 +34,13 @@ public class TransactionWithdraw extends SummaryRequiredTransaction {
         System.out.printf("Please enter account number to witdraw from: ");
         accFrom = getAccountNumber(consoleIn, "Please re-enter account number: ", "Account number confirmed...");
         
+        if(accFrom == exitCode) return;
+        
         //input for amount is handled by the getAmount function
         System.out.printf("Please enter amount in cents to witdraw: ");
         amount = getAmount(consoleIn, accFrom, "Please re-enter amount in cents: ", "Amount confirmed...");
         
-        //FIXME: needs failure case for over transfer limit. see R24T5...
+        if(accFrom == exitCode) return;
         
         System.out.println("Successfully withdrew " + amount + " cents from account "
                 + accFrom + ".");

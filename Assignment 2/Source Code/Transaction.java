@@ -9,6 +9,9 @@ public abstract class Transaction {
 	protected BufferedReader consoleIn;
 	protected int state;
 	
+	protected final String exitString = "--exit";
+	protected final int exitCode = -1;
+	
 	public abstract void process();
 	
 	public int getState() {

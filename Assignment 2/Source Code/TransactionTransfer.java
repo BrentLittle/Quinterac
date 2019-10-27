@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.*;
 
 /**
  *
@@ -35,15 +34,19 @@ public class TransactionTransfer extends SummaryRequiredTransaction {
         System.out.printf("Please enter account number to transfer to: ");
         accTo = getAccountNumber(consoleIn, "Please re-enter account number: ", "Account number confirmed...");
         
+        if(accTo == exitCode) return;
+        
         //input for accFrom is handled by the getAccount function with accTo as the previous account
         System.out.printf("Please enter account number to transfer from: ");
         accFrom = getAccountNumber(consoleIn, accTo, "Please re-enter account number: ", "Account number confirmed...");
+        
+        if(accFrom == exitCode) return;
         
         //input for amount is handled by the getAmount function
         System.out.printf("Please enter amount in cents to transfer: ");
         amount = getAmount(consoleIn, accFrom, "Please re-enter amount in cents: ", "Amount confirmed...");
         
-        //FIXME: needs failure case for over transfer limit. see R24T5...
+        if(amount == exitCode) return;
         
         System.out.println("Successfully transferred " + amount + " cents from account "
                 + accFrom + " to " + accTo + ".");

@@ -66,6 +66,10 @@ public class Quinterac
 			}
 			Transaction currentT = null;
 			
+			if(transaction.equals("--quit")) {
+				terminateProgram(session);
+			}
+			
 			switch (commands.indexOf(transaction))  // get index of the transaction from the ArrayList at the top of this class
 			{
 			case 0: // Login Transaction
@@ -192,6 +196,20 @@ public class Quinterac
 			}
 		}
 	}
+	
+	public static void terminateProgram(FrontendObject session) {
+		try
+		{
+			session.createSummary(); // create the Output file for all the transactions in the session
+		} 
+		catch (IOException e) 
+		{
+			System.out.println("Error writing to file...");
+		}
+		
+		System.exit(0);
+	}
+	
 }
 //This function should probably be in an interface of some sort
 //along with the rest of input validation

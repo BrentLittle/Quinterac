@@ -7,8 +7,6 @@ public class TransactionLogout extends WritableTransaction
 		{
 			throw new OutOfOrderException("cant logout before login");
 		}
-		
-		transactionSummary = "EOS 0000000 000 0000000 ***";
 	}
 	
 	@Override

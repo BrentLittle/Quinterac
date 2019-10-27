@@ -30,6 +30,10 @@ public abstract class SummaryRequiredTransaction extends AccountsRequiredTransac
                 continue;
             }
             
+            if(input.equals(exitString)) {
+            	return exitCode; //return the exit code
+            }
+            
             if(state == 2) {
             	num = validateAmount(input);
             } else {
