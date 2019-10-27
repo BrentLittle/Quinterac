@@ -28,7 +28,7 @@ public class AppTest {
     	
     	// setup parameters for the program to run
         String[] args = { "C:\\Users\\Denny\\Documents\\Quinterac\\Assignment 2\\src\\test\\java\\ca\\queensu\\cisc327\\ValidAccountsFile.txt"
-        		, "C:\\Users\\Denny\\Documents\\Quinterac\\Assignment 2\\src\\test\\java\\ca\\queensu\\cisc327\\transactionSummary.txt" };
+        		, "C:\\Users\\Denny\\Documents\\Quinterac\\Assignment 2\\src\\test\\java\\ca\\queensu\\cisc327\\TransactionSummary.txt" };
         
         //setup user input
         String userInput = String.join(System.lineSeparator(), terminal_input);
