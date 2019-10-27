@@ -96,7 +96,7 @@ public class Quinterac
 						System.out.println("Error encountered while writing to file" + args[1]);
 					}
 					
-					System.out.println("Session completed, output printed to " + args[1]);
+					System.out.println("Session completed, output printed to file.");
 					
 				} 
 				catch (OutOfOrderException e) 
@@ -199,14 +199,17 @@ public class Quinterac
 		
 		scan.close();
 		
-		try
-		{
-			session.createSummary(); // create the Output file for all the transactions in the session
-		} 
-		catch (IOException e) 
-		{
-			System.out.println("Error writing to file...");
+		if(session.getState() != 0) {
+			try
+			{
+				session.createSummary(); // create the Output file for all the transactions in the session
+			} 
+			catch (IOException e) 
+			{
+				System.out.println("Error writing to file...");
+			}
 		}
+		
 	}
 	
 }

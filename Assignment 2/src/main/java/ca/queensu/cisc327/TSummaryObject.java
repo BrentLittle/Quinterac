@@ -1,17 +1,18 @@
 package ca.queensu.cisc327;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.*;
 
 public class TSummaryObject 
 {
 	
-	private String outfile;
+	private String outFile;
 	private Stack<String> outStrings;
 
 	public TSummaryObject(String out) throws IOException 
 	{
-		outfile = out;
+		outFile = out;
 		outStrings = new Stack<String>();
 	}
 	
@@ -22,13 +23,13 @@ public class TSummaryObject
 	
 	public void createFile() throws IOException 
 	{
-		FileWriter output = new FileWriter(outfile); // open a filewriter
+		String strToWrite = "";
+		
 		while (!outStrings.isEmpty()) 
 		{
-			String strToWrite = outStrings.pop();	// pop the stack and write it to the output file
-			output.write(strToWrite);
+			strToWrite += outStrings.pop();	// pop the stack and write it to the output file
 		}
-		output.close();
+		Files.write(new File(outFile).toPath(), strToWrite.getBytes());
 	}
 	public Stack<String> getTransactions()
 	{

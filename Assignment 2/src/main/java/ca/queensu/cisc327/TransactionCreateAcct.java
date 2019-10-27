@@ -15,7 +15,7 @@ public TransactionCreateAcct(Scanner in, FrontendObject feObject) throws OutOfOr
         accNums = feObject.getAccountList();
         consoleIn = in;
         
-        System.out.println("Delete Account selected...");
+        System.out.println("Create account selected...");
     }
 
     /**

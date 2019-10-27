@@ -240,17 +240,15 @@ public abstract class AccountsRequiredTransaction extends WritableTransaction{
 				return;
 				
 			case -2:
-				System.out.println("Error: Entered account number conatins more"
-	                    + "than 7 digits. \nAccount numbers must contain 7 digits.");
+				System.out.println("Error: Account numbers must contain 7 digits.");
 				return;
 				
 			case -3:
-				System.out.println("Error: Entered account number conatins less"
-	                    + "than 7 digits. \nAccount numbers must contain 7 digits.");
+				System.out.println("Error: Account numbers must contain 7 digits.");
 				return;
 				
 			case -4:
-				System.out.println("Error: Account number cannot begin with a 0");
+				System.out.println("Error: Account numbers cannot begin with a 0.");
 				return;
 				
 			case -5:
