@@ -5,7 +5,10 @@ import java.util.Arrays;
 // This class when given a valid file name for an accounts List file will determine if all of the lines in the file
 // meet the requirements of valid account numbers and an ending entry of 0000000
 
-// Author Brent Littlefield (20060929)
+/**
+*
+* @author Brent Littlefield - 16bml1 - 20060929
+*/
 
 public class FileVerification {
 	
@@ -33,7 +36,7 @@ public class FileVerification {
 		    
 		    while ( (currLine = reader.readLine()) != null) // go through all the lines until reached the end
 		    {
-		    	if(currLine.length() != 7) // less than 7 digits in account number
+		    	if(currLine.length() != 7) // accountNum was not 7 digits in length
 		    	{
 		    		fileValid = false;
 		    		return;
@@ -49,6 +52,12 @@ public class FileVerification {
 		    		return;
 		    	}
 		    	
+		    	if (checkDuplicate(Integer.parseInt(currLine))) // account has already been added to the list so we have a duplicate account in file
+		    	{
+		    		fileValid = false;
+		    		return;
+		    	}
+		    	
 		    	accNums.add(Integer.parseInt(currLine));
 		    														
 		    	lastLine = currLine; 	// keep track of the current line read from the file in the next 
@@ -59,7 +68,7 @@ public class FileVerification {
 	    		return;
 	    	}		    
 		    else {
-		    	fileValid = true;
+		    	fileValid = true;  // if we reach here then we have a valid account 
 		    }
 		    
 		    reader.close();
@@ -72,16 +81,20 @@ public class FileVerification {
 		return fileValid;
 	}
 	
-	public boolean checkDuplicate(int n) {
-		for (int i = 0; i < accNums.size(); i++) {
-			if (accNums.get(i) == n) {
+	public boolean checkDuplicate(int n) // check for possible duplicate to n in the valid accounts arraylist
+	{
+		for (int i = 0; i < accNums.size(); i++) 
+		{
+			if (accNums.get(i) == n) 
+			{
 				return true;
 			}
 		}
 		return false;
 	}
 		
-	public int getAccNum(int index) {
+	public int getAccNum(int index) 
+	{
 		int n = accNums.get(index);
 		return n;
 	}
