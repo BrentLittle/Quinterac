@@ -10,12 +10,12 @@ public abstract class SummaryRequiredTransaction extends AccountsRequiredTransac
     
     /**
      * Handles input for the amount to transfer
-     * @param in BufferedReader to read the input from
-     * @param reEnterMessage String that will be displayed when the user must reenter their input
-     * @param confirmMessage String that will be displayed when the amount is confirmed
+     * @param in Scanner to read the input from
+     * @param checkAcc the account to check summary of
+     * @param transCode the transaction code
      * @return the verified amount as an int
      */
-    protected int getAmount(Scanner in, int checkAcc){
+    protected int getAmount(Scanner in, int checkAcc, String transCode){
         String input;
         int num;
         
@@ -32,7 +32,7 @@ public abstract class SummaryRequiredTransaction extends AccountsRequiredTransac
             if(state == 2) {
             	num = validateAmount(input);
             } else {
-            	num = validateAmount(input, machineMaxAmount, checkAcc, machineMaxSessionAmount);
+            	num = validateAmount(input, machineMaxAmount, checkAcc, machineMaxSessionAmount, transCode);
             }
             
             //if num is -1, then we have an error and the user must reenter
@@ -88,7 +88,7 @@ public abstract class SummaryRequiredTransaction extends AccountsRequiredTransac
      * @param check String that is the amount input to validate
      * @return the validated amount as an int
      */
-    protected int validateAmount(String check, int maxMachineAmount, int checkAcc, int maxMachineSessionAmount){
+    protected int validateAmount(String check, int maxMachineAmount, int checkAcc, int maxMachineSessionAmount, String transCode){
         
     	int checkNum;
     	int maxValue = maxMachineAmount; //default maxValue to that of agent
@@ -115,25 +115,50 @@ public abstract class SummaryRequiredTransaction extends AccountsRequiredTransac
             
         }
         
-        //we must check each transaction in this session to get transfer amount for FROM account
-        for (int i = 0; i < transactions.length; i++) {
-            
-            String current = (String)transactions[i]; //current transaction
-            String[] segments = current.split("\\s+"); //split the transaction summary at white space
-            
-            //check to see if the transaction code is transfer and if the FROM account matches
-            if(segments[0].equals("XFR") && segments[3].equals("" + checkAcc)){
+        if(transCode.equals("DEP")) {
+        	//we must check each transaction in this session to get transfer amount for FROM account
+            for (int i = 0; i < transactions.length; i++) {
                 
-                //add the transaction to the session amount
-                sessionAmount += Integer.parseInt(segments[2]);
+                String current = (String)transactions[i]; //current transaction
+                String[] segments = current.split("\\s+"); //split the transaction summary at white space
                 
-                //if at any point sessionAmount + checkNum are greater than the allowed amount, throw an error
-                if(sessionAmount + checkNum > maxSessionAmount){
+                //check to see if the transaction code is transfer and if the FROM account matches
+                if(segments[0].equals(transCode) && segments[1].equals("" + checkAcc)){
                     
-                    return -4;
+                    //add the transaction to the session amount
+                    sessionAmount += Integer.parseInt(segments[2]);
+                    
+                    //if at any point sessionAmount + checkNum are greater than the allowed amount, throw an error
+                    if(sessionAmount + checkNum > maxSessionAmount){
+                        
+                        return -4;
+                    }
                 }
+                    
             }
+        }
+        else
+        {
+        	//we must check each transaction in this session to get transfer amount for FROM account
+            for (int i = 0; i < transactions.length; i++) {
                 
+                String current = (String)transactions[i]; //current transaction
+                String[] segments = current.split("\\s+"); //split the transaction summary at white space
+                
+                //check to see if the transaction code is transfer and if the FROM account matches
+                if(segments[0].equals(transCode) && segments[3].equals("" + checkAcc)){
+                    
+                    //add the transaction to the session amount
+                    sessionAmount += Integer.parseInt(segments[2]);
+                    
+                    //if at any point sessionAmount + checkNum are greater than the allowed amount, throw an error
+                    if(sessionAmount + checkNum > maxSessionAmount){
+                        
+                        return -4;
+                    }
+                }
+                    
+            }
         }
         
         //if all these conditions are passed, we can return the number
@@ -145,11 +170,11 @@ public abstract class SummaryRequiredTransaction extends AccountsRequiredTransac
     	switch(num) {
     	
 			case -1:
-				System.out.println("Error: Entered amount must be an integer");
+				System.out.println("Error: Entered amount must be an integer.");
 				return;
 				
 			case -2:
-				System.out.println("Error: Entered amount cannot be less than zero");
+				System.out.println("Error: Entered amount cannot be less than nothing.");
 				return;
 				
 			case -3:
@@ -157,8 +182,8 @@ public abstract class SummaryRequiredTransaction extends AccountsRequiredTransac
 				return;
 				
 			case -4:
-				System.out.println("Error: Entered amount cannot exceed the maximum allowable"
-						+ "\nsession amount for this type of transaction.");
+				System.out.println("Error: Entered amount cannot exceed the maximum allowable "
+						+ "session amount for this type of transaction.");
 				return;
 		}
     }

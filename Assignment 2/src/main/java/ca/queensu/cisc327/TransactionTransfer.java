@@ -39,7 +39,7 @@ public class TransactionTransfer extends SummaryRequiredTransaction {
         if(accFrom == exitCode) return;
         
         //input for amount is handled by the getAmount function
-        amount = getAmount(consoleIn, accFrom);
+        amount = getAmount(consoleIn, accFrom, "XFR");
         if(amount == exitCode) return;
         
         System.out.println("Successfully transferred " + amount + " cents from account "

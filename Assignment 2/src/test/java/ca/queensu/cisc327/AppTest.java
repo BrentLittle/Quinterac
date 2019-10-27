@@ -521,6 +521,420 @@ public class AppTest {
         		, "Please enter account name:", "Please enter a transaction: "));
     }
 	
+	@Test
+    public void R13T1() throws Exception {
+        runTest(Arrays.asList("login", "machine", "deposit", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R13T2() throws Exception {
+        runTest(Arrays.asList("login", "agent", "deposit", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R14T1() throws Exception {
+        runTest(Arrays.asList("login", "agent", "deposit", "1111111", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R14T2() throws Exception {
+        runTest(Arrays.asList("login", "agent", "deposit", "9876543", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Error: Entered account number does not exist.", "Please enter account number:"
+        		, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R14T3() throws Exception {
+        runTest(Arrays.asList("login", "agent", "deposit", "123456", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Error: Account numbers must contain 7 digits.", "Please enter account number:"
+        		, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R14T4() throws Exception {
+        runTest(Arrays.asList("login", "agent", "deposit", "12345678", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Error: Account numbers must contain 7 digits.", "Please enter account number:"
+        		, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R14T5() throws Exception {
+        runTest(Arrays.asList("login", "agent", "deposit", "0123456", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Error: Account numbers cannot begin with a 0.", "Please enter account number:"
+        		, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R14T6() throws Exception {
+        runTest(Arrays.asList("login", "agent", "deposit", "dog", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Error: Entered account number is in fact, not a number.", "Please enter account number:"
+        		, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R15T1() throws Exception {
+        runTest(Arrays.asList("login", "machine", "deposit", "1111111", "2000", "logout", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Amount confirmed..." , "Successfully deposited 2000 cents into account 1111111."
+        		,"Please enter a transaction: ", "Session completed, output printed to file.", "Please enter a transaction: "),
+        		
+        		expectedOutputFolder + "R15T1_expected.txt");
+    }
+	
+	@Test
+    public void R15T2() throws Exception {
+        runTest(Arrays.asList("login", "machine", "deposit", "1111111", "300000", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Error: Entered amount cannot exceed the maximum allowable amount." 
+        		, "Please enter amount:", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R15T3() throws Exception {
+        runTest(Arrays.asList("login", "machine", "deposit", "1111111", "-1", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Error: Entered amount cannot be less than nothing." 
+        		, "Please enter amount:", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R15T4() throws Exception {
+        runTest(Arrays.asList("login", "machine", "deposit", "1111111", "dog", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Error: Entered amount must be an integer." 
+        		, "Please enter amount:", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R15T5() throws Exception {
+        runTest(Arrays.asList("login", "machine", "deposit", "1111111", "200000", "deposit"
+        		, "1111111", "200000", "deposit", "1111111", "200000", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Amount confirmed..." , "Successfully deposited 200000 cents into account 1111111.", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Amount confirmed..." , "Successfully deposited 200000 cents into account 1111111.", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Error: Entered amount cannot exceed the maximum allowable session amount for this type of transaction."
+        		, "Please enter amount:","Please enter a transaction: "),
+        		
+        		expectedOutputFolder + "R15T5_expected.txt");
+    }
+	
+	@Test
+    public void R16T1() throws Exception {
+        runTest(Arrays.asList("login", "agent", "deposit", "1111111", "1000000", "logout", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Amount confirmed..." , "Successfully deposited 1000000 cents into account 1111111."
+        		,"Please enter a transaction: ", "Session completed, output printed to file.", "Please enter a transaction: "),
+        		
+        		expectedOutputFolder + "R16T1_expected.txt");
+    }
+	
+	@Test
+    public void R16T2() throws Exception {
+        runTest(Arrays.asList("login", "agent", "deposit", "1111111", "100000000", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Error: Entered amount cannot exceed the maximum allowable amount." 
+        		, "Please enter amount:", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R16T3() throws Exception {
+        runTest(Arrays.asList("login", "agent", "deposit", "1111111", "-1", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Error: Entered amount cannot be less than nothing." 
+        		, "Please enter amount:", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R16T4() throws Exception {
+        runTest(Arrays.asList("login", "agent", "deposit", "1111111", "dog", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Deposit selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Error: Entered amount must be an integer." 
+        		, "Please enter amount:", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R17T1() throws Exception {
+        runTest(Arrays.asList("login", "machine", "withdraw", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R17T2() throws Exception {
+        runTest(Arrays.asList("login", "agent", "withdraw", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R18T1() throws Exception {
+        runTest(Arrays.asList("login", "agent", "withdraw", "1111111", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R18T2() throws Exception {
+        runTest(Arrays.asList("login", "agent", "withdraw", "9876543", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Error: Entered account number does not exist.", "Please enter account number:"
+        		, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R18T3() throws Exception {
+        runTest(Arrays.asList("login", "agent", "withdraw", "123456", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Error: Account numbers must contain 7 digits.", "Please enter account number:"
+        		, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R18T4() throws Exception {
+        runTest(Arrays.asList("login", "agent", "withdraw", "12345678", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Error: Account numbers must contain 7 digits.", "Please enter account number:"
+        		, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R18T5() throws Exception {
+        runTest(Arrays.asList("login", "agent", "withdraw", "0123456", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Error: Account numbers cannot begin with a 0.", "Please enter account number:"
+        		, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R18T6() throws Exception {
+        runTest(Arrays.asList("login", "agent", "withdraw", "dog", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Error: Entered account number is in fact, not a number.", "Please enter account number:"
+        		, "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R19T1() throws Exception {
+        runTest(Arrays.asList("login", "machine", "withdraw", "1111111", "2000", "logout", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Amount confirmed..." , "Successfully withdrew 2000 cents from account 1111111."
+        		,"Please enter a transaction: ", "Session completed, output printed to file.", "Please enter a transaction: "),
+        		
+        		expectedOutputFolder + "R19T1_expected.txt");
+    }
+	
+	@Test
+    public void R19T2() throws Exception {
+        runTest(Arrays.asList("login", "machine", "withdraw", "1111111", "300000", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Error: Entered amount cannot exceed the maximum allowable amount." 
+        		, "Please enter amount:", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R19T3() throws Exception {
+        runTest(Arrays.asList("login", "machine", "withdraw", "1111111", "-1", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Error: Entered amount cannot be less than nothing." 
+        		, "Please enter amount:", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R19T4() throws Exception {
+        runTest(Arrays.asList("login", "machine", "withdraw", "1111111", "dog", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Error: Entered amount must be an integer." 
+        		, "Please enter amount:", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R19T5() throws Exception {
+        runTest(Arrays.asList("login", "machine", "withdraw", "1111111", "200000", "withdraw"
+        		, "1111111", "200000", "withdraw", "1111111", "200000", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Amount confirmed..." , "Successfully withdrew 200000 cents from account 1111111.", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Amount confirmed..." , "Successfully withdrew 200000 cents from account 1111111.", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Error: Entered amount cannot exceed the maximum allowable session amount for this type of transaction."
+        		, "Please enter amount:","Please enter a transaction: "),
+        		
+        		expectedOutputFolder + "R15T5_expected.txt");
+    }
+	
+	@Test
+    public void R20T1() throws Exception {
+        runTest(Arrays.asList("login", "agent", "withdraw", "1111111", "500000", "logout", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Amount confirmed..." , "Successfully withdrew 500000 cents from account 1111111."
+        		,"Please enter a transaction: ", "Session completed, output printed to file.", "Please enter a transaction: "),
+        		
+        		expectedOutputFolder + "R20T1_expected.txt");
+    }
+	
+	@Test
+    public void R20T2() throws Exception {
+        runTest(Arrays.asList("login", "agent", "withdraw", "1111111", "100000000", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Error: Entered amount cannot exceed the maximum allowable amount." 
+        		, "Please enter amount:", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R20T3() throws Exception {
+        runTest(Arrays.asList("login", "agent", "withdraw", "1111111", "-1", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Error: Entered amount cannot be less than nothing." 
+        		, "Please enter amount:", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R20T4() throws Exception {
+        runTest(Arrays.asList("login", "agent", "withdraw", "1111111", "dog", "--exit", "--quit"), 
+        		
+        		Arrays.asList("Please enter a transaction: "
+        		, "Please enter login mode: ", "Please enter a transaction: "
+        		, "Withdraw selected...", "Please enter account number:"
+        		, "Account number confirmed...", "Please enter amount:"
+        		, "Error: Entered amount must be an integer." 
+        		, "Please enter amount:", "Please enter a transaction: "));
+    }
+	
 	/*
 	@Test
     public void R2T1() throws Exception {

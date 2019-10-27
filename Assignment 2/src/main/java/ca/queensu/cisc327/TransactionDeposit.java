@@ -33,13 +33,13 @@ public class TransactionDeposit extends SummaryRequiredTransaction
         if(accTo == exitCode) return;
         
         //input for amount is handled by the getAmount function
-        amount = getAmount(consoleIn, accTo);
+        amount = getAmount(consoleIn, accTo, "DEP");
         if(amount == exitCode) return;
         
-        System.out.println("Successfully deposited " + amount + " cents to account "
+        System.out.println("Successfully deposited " + amount + " cents into account "
                 + accTo + ".");
         
-        transactionSummary = "WDR " + accTo + " " + amount + " " + blankAccount + " " + blankName+ "\n";
+        transactionSummary = "DEP " + accTo + " " + amount + " " + blankAccount + " " + blankName+ "\n";
         
     }
 }
