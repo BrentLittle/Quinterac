@@ -11,7 +11,7 @@ public class TransactionWithdraw extends SummaryRequiredTransaction {
     public TransactionWithdraw(Scanner in, FrontendObject feObject) throws OutOfOrderException{
     	
     	state = feObject.getState();
-        if(state == 0 || state == 3) throw new OutOfOrderException("Cannot transfer while logged out.");
+        if(state == 0 || state == 3) throw new OutOfOrderException("Cannot withdraw while logged out.");
         
         accNums = feObject.getAccountList();
         transactions = feObject.getTransactions().toArray();

@@ -7,7 +7,7 @@ public class TransactionLogout extends WritableTransaction
 	{
 		if(state == 0 || state == 3) 
 		{
-			throw new OutOfOrderException("cant logout before login");
+			throw new OutOfOrderException("Cannot logout before login.");
 		}
 	}
 	

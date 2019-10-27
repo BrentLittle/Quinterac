@@ -18,11 +18,53 @@ import main.java.ca.queensu.cisc327.Quinterac;
 public class AppTest {
 	
 	@Test
-    public void testAppR1T1() throws Exception {
+    public void R1T1() throws Exception {
         runTest(Arrays.asList("logout", "--quit"), Arrays.asList("Please enter a transaction: "
-        		, "cant logout before login", "Please enter a transaction: "));
-
+        		, "Cannot logout before login.", "Please enter a transaction: "));
     }
+	
+	@Test
+    public void R1T2() throws Exception {
+        runTest(Arrays.asList("createacc", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Cannot create account while logged out.", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R1T3() throws Exception {
+        runTest(Arrays.asList("deleteacc", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Cannot delete account while logged out.", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R1T4() throws Exception {
+        runTest(Arrays.asList("deposit", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Cannot deposit while logged out.", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R1T5() throws Exception {
+        runTest(Arrays.asList("withdraw", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Cannot withdraw while logged out.", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R1T6() throws Exception {
+        runTest(Arrays.asList("transfer", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Cannot transfer while logged out.", "Please enter a transaction: "));
+    }
+	
+	@Test
+    public void R1T7() throws Exception {
+        runTest(Arrays.asList("dog", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Unrecognized transaction: dog", "Please enter a transaction: "));
+    }
+	
+	/*
+	@Test
+    public void R2T1() throws Exception {
+        runTest(Arrays.asList("dog", "--quit"), Arrays.asList("Please enter a transaction: "
+        		, "Unrecognized transaction: dog", "Please enter a transaction: "));
+    }*/
     
     public void runTest(List<String> terminal_input, List<String> expected_terminal_tails) throws Exception{
     	
@@ -48,9 +90,9 @@ public class AppTest {
         String[] printed_lines = outContent.toString().split("[\r\n]+");
 
         // compare the tail of the terminal outputs:
-        //int diff = printed_lines.length - expected_terminal_tails.size();
+        int diff = printed_lines.length - expected_terminal_tails.size();
         for (int i = 0; i < expected_terminal_tails.size(); ++i) {
-            assertEquals(expected_terminal_tails.get(i), printed_lines[i]);
+            assertEquals(expected_terminal_tails.get(i), printed_lines[i + diff]);
         }
     }
 
