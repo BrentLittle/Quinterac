@@ -1,0 +1,2 @@
+- Re-factor code to make better use of  hierarchy
+- Move all operations of Quinterac into front end
