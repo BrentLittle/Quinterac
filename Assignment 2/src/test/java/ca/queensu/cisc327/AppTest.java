@@ -19,7 +19,8 @@ public class AppTest {
 	
 	private String outFilePath = "src/test/java/ca/queensu/cisc327/TransactionSummaryFile.txt";
 	private String inFilePath = "src/test/java/ca/queensu/cisc327/ValidAccountsFile.txt";
-	private String expectedOutputFolder = "src/test/resources/R2/";
+	private String expectedOutputFolder = "src/test/resources/R2/output/";
+	private String inputFolder = "src/test/resources/R2/input/";
 	
 	@Test
     public void R1T1() throws Exception {
@@ -1266,6 +1267,56 @@ public class AppTest {
         		, "Error: Entered amount must be an integer." 
         		, "Please enter amount:", "Please enter a transaction: "));
     }
+	
+	@Test
+    public void R26T1() throws Exception {
+        fileTest(inputFolder + "InvalidAccountFile1.txt", Arrays.asList("Invalid Account File Recieved"));
+    }
+	
+	@Test
+    public void R26T2() throws Exception {
+        fileTest(inputFolder + "InvalidAccountFile2.txt", Arrays.asList("Invalid Account File Recieved"));
+    }
+	
+	@Test
+    public void R26T3() throws Exception {
+        fileTest(inputFolder + "InvalidAccountFile3.txt", Arrays.asList("Invalid Account File Recieved"));
+    }
+	
+	@Test
+    public void R26T4() throws Exception {
+        fileTest(inputFolder + "InvalidAccountFile4.txt", Arrays.asList("Invalid Account File Recieved"));
+    }
+	
+	public void fileTest(String inputFile, List<String> expected_terminal_tails) throws Exception{
+		
+		// setup parameters for the program to run
+        String[] args = { inputFile, outFilePath };
+        
+        //setup user input
+        String userInput = String.join(System.lineSeparator(), "--quit");
+        ByteArrayInputStream in = new ByteArrayInputStream(userInput.getBytes());
+        System.setIn(in);
+		
+        // setup stdin & stdout:
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
+        
+        // run the program
+        Quinterac.main(args);
+
+        // capture terminal outputs:
+        String[] printed_lines = outContent.toString().split("[\r\n]+");
+
+        // compare the tail of the terminal outputs:
+        int diff = printed_lines.length - expected_terminal_tails.size();
+        for (int i = 0; i < expected_terminal_tails.size(); ++i) {
+            assertEquals(expected_terminal_tails.get(i), printed_lines[i + diff]);
+        }
+        
+	}
     
     public void runTest(List<String> terminal_input, List<String> expected_terminal_tails) throws Exception{
     	
@@ -1294,6 +1345,7 @@ public class AppTest {
         for (int i = 0; i < expected_terminal_tails.size(); ++i) {
             assertEquals(expected_terminal_tails.get(i), printed_lines[i + diff]);
         }
+        
     }
     
     public void runTest(List<String> terminal_input, List<String> expected_terminal_tails
@@ -1332,6 +1384,7 @@ public class AppTest {
             String actual_output = new String(Files.readAllBytes(tmpFile.toPath()), "UTF-8");
             assertEquals(expected_output, actual_output);
         }
+        
     }
 
     /**

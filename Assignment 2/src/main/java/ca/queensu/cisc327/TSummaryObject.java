@@ -10,7 +10,7 @@ public class TSummaryObject
 	private String outFile;
 	private Stack<String> outStrings;
 
-	public TSummaryObject(String out) throws IOException 
+	public TSummaryObject(String out)
 	{
 		outFile = out;
 		outStrings = new Stack<String>();

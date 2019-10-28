@@ -29,13 +29,10 @@ public class Quinterac
 	{
 		FrontendObject session = null;
 		
-		try 
-		{
-			session = new FrontendObject(args[0], args[1]); // create a new instance of a FrontendObject
-		} 
-		catch (Exception e) 
-		{
-			System.out.println(e.getMessage());
+		session = new FrontendObject(args[0], args[1]); // create a new instance of a FrontendObject
+		
+		if(session == null) {
+			return;
 		}
 
 		Scanner consoleIn = new Scanner(System.in);

@@ -22,17 +22,12 @@ public class FrontendObject {
 		state = 0;
 		try {
 			accNums = new FileVerification(accountFile);
-		} catch (Exception e) {
-			//catch all the throwables from instantation of accNums or summary here
+		} catch (InvalidAccountException e) {
+			System.out.println(e.getMessage());
 			state = -1; //exits the loop under main
 		}
 		
-		try {
-			summary = new TSummaryObject(outFile);
-		} catch (Exception e) {
-			//catch all the throwables from instantation of accNums or summary here
-			state = -1; //exits the loop under main
-		}
+		summary = new TSummaryObject(outFile);
 	}
 	
 	public int getState ( ) {
