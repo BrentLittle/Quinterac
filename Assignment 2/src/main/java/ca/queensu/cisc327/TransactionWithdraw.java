@@ -18,7 +18,7 @@ public class TransactionWithdraw extends SummaryRequiredTransaction {
         consoleIn = in;
         
         machineMaxAmount = 100000;
-        machineMaxSessionAmount = 1000000;
+        machineMaxSessionAmount = 500000;
         
         System.out.println("Withdraw selected...");
     }
@@ -36,12 +36,12 @@ public class TransactionWithdraw extends SummaryRequiredTransaction {
         if(accFrom == exitCode) return;
         
         //input for amount is handled by the getAmount function
-        amount = getAmount(consoleIn, accFrom, "XFR");
+        amount = getAmount(consoleIn, accFrom, "WDR");
         if(amount == exitCode) return;
         
         System.out.println("Successfully withdrew " + amount + " cents from account "
                 + accFrom + ".");
-        transactionSummary = "WDR " + blankAccount + " " + amount + " " + accFrom + " " + blankName+ "\n";
+        transactionSummary = "WDR " + blankAccount + " " + amount + " " + accFrom + " " + blankName + "\n";
         
     }
 }
