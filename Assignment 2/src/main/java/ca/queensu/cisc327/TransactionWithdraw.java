@@ -41,7 +41,7 @@ public class TransactionWithdraw extends SummaryRequiredTransaction {
         
         System.out.println("Successfully withdrew " + amount + " cents from account "
                 + accFrom + ".");
-        transactionSummary = "WDR " + blankAccount + " " + amount + " " + accFrom + " " + blankName + "\n";
+        transactionSummary = "WDR " + blankAccount + " " + amount + " " + accFrom + " " + blankName + EOL;
         
     }
 }

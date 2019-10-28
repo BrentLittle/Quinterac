@@ -39,7 +39,7 @@ public class TransactionDeposit extends SummaryRequiredTransaction
         System.out.println("Successfully deposited " + amount + " cents into account "
                 + accTo + ".");
         
-        transactionSummary = "DEP " + accTo + " " + amount + " " + blankAccount + " " + blankName+ "\n";
+        transactionSummary = "DEP " + accTo + " " + amount + " " + blankAccount + " " + blankName + EOL;
         
     }
 }

@@ -44,7 +44,7 @@ public class TransactionDeleteAcct extends AccountsRequiredTransaction
         System.out.println("Successfully deleted account " + accNum + " belonging to "
                 + name + ".");
         
-        transactionSummary = "DEL " + accNum + " " + blankAmount + " " + blankAccount + " " + name + "\n";
+        transactionSummary = "DEL " + accNum + " " + blankAmount + " " + blankAccount + " " + name + EOL;
         
     }
     

@@ -44,7 +44,7 @@ public class TransactionTransfer extends SummaryRequiredTransaction {
         
         System.out.println("Successfully transferred " + amount + " cents from account "
                 + accFrom + " to " + accTo + ".");
-        transactionSummary = "XFR " + accTo + " " + amount + " " + accFrom + " " + blankName +"\n";
+        transactionSummary = "XFR " + accTo + " " + amount + " " + accFrom + " " + blankName + EOL;
     }
     
 }

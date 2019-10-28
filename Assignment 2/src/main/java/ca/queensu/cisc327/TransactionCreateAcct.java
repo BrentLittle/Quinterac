@@ -38,7 +38,7 @@ public TransactionCreateAcct(Scanner in, FrontendObject feObject) throws OutOfOr
         System.out.println("Successfully created account " + accNum + " belonging to "
                 + name + ".");
         
-        transactionSummary = "NEW " + accNum + " " + blankAmount + " " + blankAccount + " " + name + "\n";
+        transactionSummary = "NEW " + accNum + " " + blankAmount + " " + blankAccount + " " + name + EOL;
         
     }
 
