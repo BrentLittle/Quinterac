@@ -14,7 +14,7 @@ import java.util.List;
 import org.junit.*;
 
 import main.java.ca.queensu.cisc327.Quinterac;
-//import main.java.ca.queensu.cisc327.QuinteracBackend;
+import main.java.ca.queensu.cisc327.QuinteracBackend;
 
 public class AppTest {
 	
@@ -23,6 +23,12 @@ public class AppTest {
 	private String inFilePath = "src/test/java/ca/queensu/cisc327/ValidAccountsFile.txt";
 	private String expectedOutputFolder = "src/test/resources/R2/output/";
 	private String inputFolder = "src/test/resources/R2/input/";
+    
+    //Relative paths for backend testing
+	private String expectedMastersPath = "C:/Users/Denny/eclipse-workspace/Quinterac/src/test/resources/R4/expectedMasterFiles\\";
+	private String inMasterFilePath = "C:/Users/Denny/eclipse-workspace/Quinterac/src/test/resources/R4/masterFiles\\";
+	private String transSummaryPath = "C:/Users/Denny/eclipse-workspace/Quinterac/src/test/resources/R4/TransactionSummaryFiles\\";
+	private String r4FilePath = "C:/Users/Denny/eclipse-workspace/Quinterac/src/test/resources/R4\\";
 	
 	/*
 	 * R1T1: User cannot logout before logging in
@@ -36,7 +42,7 @@ public class AppTest {
     }
 	
 	/*
-	 * R1T2: User cannot logout before logging in
+	 * R1T2: User cannot create account before logging in
 	 */
 	@Test
     public void R1T2() throws Exception {
@@ -1645,6 +1651,101 @@ public class AppTest {
 	@Test
     public void R26T4() throws Exception {
         fileTest(inputFolder + "InvalidAccountFile4.txt", Arrays.asList("Invalid Account File Recieved"));
+    }
+    
+    @Test
+	public void backR1T1() throws Exception {
+		runBackendTest(transSummaryPath + "backR1T1", inMasterFilePath + "backR1T1Master.txt", expectedMastersPath + "backR1T1Expected.txt"
+				, Arrays.asList("Account already exists", "Error during processNEW"));
+	}
+    
+    @Test
+	public void backR1T2() throws Exception {
+		runBackendTest(transSummaryPath + "backR1T2", inMasterFilePath + "backR1T2Master.txt", expectedMastersPath + "backR1T2Expected.txt"
+				, Arrays.asList("Done"));
+	}
+    
+    @Test
+	public void backR1T3() throws Exception {
+		runBackendTest(transSummaryPath + "backR1T3", inMasterFilePath + "backR1T3Master.txt", expectedMastersPath + "backR1T3Expected.txt"
+				, Arrays.asList("Unreadable line encountered in merged transaction file."));
+	}
+    
+    @Test
+	public void backR2T1() throws Exception {
+		runBackendTest(transSummaryPath + "backR2T1", inMasterFilePath + "backR2T1Master.txt", expectedMastersPath + "backR2T1Expected.txt"
+				, Arrays.asList("Balance cannot be negative.", "Error during processWDR"));
+	}
+    
+    @Test
+	public void backR2T2() throws Exception {
+		runBackendTest(transSummaryPath + "backR2T2", inMasterFilePath + "backR2T2Master.txt", expectedMastersPath + "backR2T2Expected.txt"
+				, Arrays.asList("Done"));
+	}
+    
+    @Test
+	public void backR2T3() throws Exception {
+		runBackendTest(transSummaryPath + "backR2T3", inMasterFilePath + "backR2T3Master.txt", expectedMastersPath + "backR2T3Expected.txt"
+				, Arrays.asList("Error during processDEL"));
+	}
+    
+    @Test
+	public void backR2T4() throws Exception {
+		runBackendTest(transSummaryPath + "backR2T4", inMasterFilePath + "backR2T4Master.txt", expectedMastersPath + "backR2T4Expected.txt"
+				, Arrays.asList("Done"));
+	}
+    
+    @Test
+	public void backR2T5() throws Exception {
+		runBackendTest(transSummaryPath + "backR2T5", inMasterFilePath + "backR2T5Master.txt", expectedMastersPath + "backR2T5Expected.txt"
+				, Arrays.asList("Done"));
+	}
+    
+    @Test
+	public void backR2T6() throws Exception {
+		runBackendTest(transSummaryPath + "backR2T6", inMasterFilePath + "backR2T6Master.txt", expectedMastersPath + "backR2T6Expected.txt"
+				, Arrays.asList("Error during processWDR"));
+	}
+    
+    /**
+     * Overloaded with extra output file parameter
+     * @param terminal_input: a list of String arguments to be passed through the mock terminal,
+     *        expected_terminal_tails: a list of String outputs expected from the mock terminal,
+     *        expected_out_file: the file name of the expected output file
+     * @return void
+     */
+    public void runBackendTest(String transactionDirectory, String masterFile, String expectedMasterFile,
+    		List<String> expected_terminal_tails) throws Exception{
+    	
+    	// setup parameters for the program to run
+        String[] args = {transactionDirectory, masterFile};
+        
+        // setup stdin & stdout:
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
+
+        // run the program
+        QuinteracBackend.main(args);
+
+        // capture terminal outputs:
+        String[] printed_lines = outContent.toString().split("[\r\n]+");
+
+        // compare the tail of the terminal outputs:
+        int diff = printed_lines.length - expected_terminal_tails.size();
+        for (int i = 0; i < expected_terminal_tails.size(); ++i) {
+            assertEquals(expected_terminal_tails.get(i), printed_lines[i + diff]);
+        }
+        
+        // compare output file content to the expected content
+        if (expectedMasterFile != null) {
+        	
+            String expected_output = new String(Files.readAllBytes(Paths.get(masterFile)), "UTF-8");
+            String actual_output = new String(Files.readAllBytes(Paths.get(expectedMasterFile)), "UTF-8");
+            assertEquals(expected_output, actual_output);
+        }
+        
     }
 	
     /**

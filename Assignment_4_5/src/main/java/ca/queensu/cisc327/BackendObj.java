@@ -26,12 +26,12 @@ public class BackendObj {
 		try {
 			mergeFiles(dir);
 		} catch (FileNotFoundException e) {
-			System.out.printf("Error while merging summaries.");
-			e.printStackTrace();
+			System.out.println("Error while merging summaries.");
+			//e.printStackTrace();
 			throw new ProcessingException("Error during BackendObj.mergeFiles");
 		} catch (IOException e) {
-			System.out.printf("Error while reading or writing to file.");
-			e.printStackTrace();
+			System.out.println("Error while reading or writing to file.");
+			//e.printStackTrace();
 			throw new ProcessingException("Error during BackendObj.mergeFiles");
 		}
 		
@@ -39,8 +39,8 @@ public class BackendObj {
 		try {
 		mergedTrans = new MergedSummaryObj("MergedSummary.txt");
 		} catch (Exception e) {
-			System.out.printf("Error while creating MergedSummaryObj.");
-			e.printStackTrace();
+			System.out.println("Error while creating MergedSummaryObj.");
+			//e.printStackTrace();
 			throw new ProcessingException("Error during instantiating mergedTrans");
 		}
 		
@@ -48,12 +48,12 @@ public class BackendObj {
 		try {
 			masterFile = new MasterFileObj(master);
 		} catch (IOException e) {
-			System.out.printf("Error while reading master acc file.");
-			e.printStackTrace();
+			System.out.println("Error while reading master acc file.");
+			//e.printStackTrace();
 			throw new ProcessingException("Error during instantiating masterFile");
 		} catch (InvalidAccountException e) {
-			System.out.printf("Error while parsing master acc file.");
-			e.printStackTrace();
+			System.out.println("Error while parsing master acc file.");
+			//e.printStackTrace();
 			throw new ProcessingException("Error during instantiating masterFile");
 		}
 		
@@ -69,7 +69,7 @@ public class BackendObj {
 				processDEP(currentLine[1], currentLine[2]);
 				break;
 			case "WDR":
-				processWDR(currentLine[1], currentLine[2]);
+				processWDR(currentLine[3], currentLine[2]);
 				break;
 			case "XFR":
 				processXFR(currentLine[1], currentLine[2], currentLine[3]);
@@ -96,8 +96,8 @@ public class BackendObj {
 		try {
 			masterFile.updateMaster();
 		} catch (IOException e) {
-			System.out.printf(e.getMessage());
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+			//e.printStackTrace();
 			throw new ProcessingException("Error during masterFile.updateMaster()");
 		}
 	}
@@ -116,7 +116,7 @@ public class BackendObj {
 			buffer = new BufferedReader(new FileReader(input));
 			String inLine;
 			while ((inLine = buffer.readLine()) != null) {
-				output.print(inLine);
+				output.print(inLine + "\n");
 			} //end while
 			output.flush();
 		} //end for
@@ -132,8 +132,8 @@ public class BackendObj {
 		try {
 			curr.validate();
 		} catch (InvalidAccountException e) {
-			System.out.printf(e.getMessage());
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+			//e.printStackTrace();
 			throw new ProcessingException("Error during processDEP");
 		}
 	}
@@ -146,8 +146,8 @@ public class BackendObj {
 		try {
 			curr.validate();
 		} catch (InvalidAccountException e) {
-			System.out.printf(e.getMessage());
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+			//e.printStackTrace();
 			throw new ProcessingException("Error during processWDR");
 		}
 	}
@@ -164,8 +164,8 @@ public class BackendObj {
 			currTo.validate();
 			currFrom.validate();
 		} catch (InvalidAccountException e) {
-			System.out.printf(e.getMessage());
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+			//e.printStackTrace();
 			throw new ProcessingException("Error during processXFR");
 		}
 	}
@@ -176,8 +176,8 @@ public class BackendObj {
 		try {
 			masterFile.addToHash(account, curr);
 		} catch (InvalidAccountException e) {
-			System.out.printf(e.getMessage());
-			e.printStackTrace();
+			System.out.println(e.getMessage());
+			//e.printStackTrace();
 			throw new ProcessingException("Error during processNEW");
 		}
 	}
@@ -185,11 +185,16 @@ public class BackendObj {
 	private void processDEL(String acc, String name) throws ProcessingException {
 		int account = Integer.parseInt(acc);
 		AccountObj curr = masterFile.allAccounts.get(account);
-		if (name == curr.getAccName()) {
-			curr.setAccBalance(0);
+		if (name.equals(curr.getAccName())) {
 			curr.setDeleted(true);
+			try {
+				curr.validate();
+			} catch (InvalidAccountException e) {
+				System.out.println(e.getMessage());
+				throw new ProcessingException("Error during processDEL");
+			}
 		} else {
-			System.out.printf("Non-matching account names during processDEL");
+			System.out.println("Non-matching account names during processDEL");
 			throw new ProcessingException("Error during processDEL");
 		}
 	}	

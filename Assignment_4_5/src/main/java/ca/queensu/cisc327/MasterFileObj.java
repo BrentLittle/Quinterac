@@ -25,8 +25,9 @@ public class MasterFileObj {
 
 	public MasterFileObj(String fn) throws IOException, InvalidAccountException {
 		filename = fn;
-		createAccountObjects();
+		allAccounts = new HashMap<Integer, AccountObj>();
 		allAccNums = new PriorityQueue<Integer>();
+		createAccountObjects();
 	}
 
 	private void createAccountObjects() throws IOException, InvalidAccountException {
@@ -35,7 +36,7 @@ public class MasterFileObj {
 			input = new FileInputStream(filename);
 		} catch (IOException e) {
 			System.out.printf("Error encountered while opening file.");
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 		BufferedReader buffer = new BufferedReader(new InputStreamReader(input));
 		String inLine;
@@ -46,14 +47,14 @@ public class MasterFileObj {
 		int index = 0;
 		while ((inLine = buffer.readLine()) != null) {
 			index += 1;
-			String[] tempArr = inLine.split(" ");
+			String[] tempArr = inLine.split("\\s+");
 			try {
 				tempNum = Integer.parseInt(tempArr[0]);
 				tempBal = Integer.parseInt(tempArr[1]);
 				tempName = tempArr[2];
 			} catch (NumberFormatException e) {
 				System.out.printf("Error encountered while parsing master file in line %d", index);
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			if (tempNum == null || tempBal == null || tempName == null) {
 				throw new InvalidAccountException("Error in master file line formatting.");
@@ -63,9 +64,8 @@ public class MasterFileObj {
 				addToHash(tempNum, tempAcc);
 			} catch (InvalidAccountException e) {
 				System.out.printf(e.getMessage());
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
-			allAccNums.add(tempNum);
 		} //end while
 	} //end createAccountObjects()
 
@@ -74,27 +74,37 @@ public class MasterFileObj {
 			throw new InvalidAccountException("Account already exists");
 		}
 		allAccounts.put(key, acc);
+		allAccNums.add(key);
 	}
 	
 	public void updateMaster() throws IOException {
-		Integer currNum;
-		String newMaster = "";
-		String newValid = "";
-		File master = new File(filename);
-		File valid = new File("NewValidAccount.txt");
-		FileWriter outputM = new FileWriter(master, false);
-		FileWriter outputV = new FileWriter(valid, false);
-		
-		//gets the smallest account number in the heap
-		//fetches the account object from the hash table
-		//calls accountObj.toString() and overwrites the current master account file
-		while ((currNum = allAccNums.poll()) != null) {
-			newMaster += (allAccounts.get(currNum).toString() + "\n");
-			newValid += (Integer.toString(currNum) + "\n");
-		}
-		outputM.write(newMaster);
-		outputV.write(newValid);
-		outputM.close();
-		outputV.close();
-	}
+        Integer currNum;
+        String newMaster = "";
+        String newValid = "";
+        File master = new File(filename);
+        File valid = new File("NewValidAccount.txt");
+        FileWriter outputM = new FileWriter(master, false);
+        FileWriter outputV = new FileWriter(valid, false);
+        
+        //gets the smallest account number in the heap
+        //fetches the account object from the hash table
+        //calls accountObj.toString() and overwrites the current master account file
+        currNum = allAccNums.poll();
+        while (currNum != null) {
+            if (!allAccounts.get(currNum).getDeleted()) { //needs to add this check for deleted
+                newValid += currNum;
+                newMaster += allAccounts.get(currNum);
+            }
+            currNum = allAccNums.poll();
+            
+            if(currNum != null) {
+            	newMaster += "\n";
+            	newValid += "\n";
+            }
+        }
+        outputM.write(newMaster);
+        outputV.write(newValid);
+        outputM.close();
+        outputV.close();
+    }
 }

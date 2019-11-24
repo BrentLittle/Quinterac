@@ -15,7 +15,7 @@ public class AccountObj {
 
 	public AccountObj(int accNumber, int accBalance, String accName) {
 		this.accNumber = accNumber;
-		this.accBalance = accNumber;
+		this.accBalance = accBalance;
 		this.accName = accName;
 		deleted = false; //accounts are not deleted by default
 	}

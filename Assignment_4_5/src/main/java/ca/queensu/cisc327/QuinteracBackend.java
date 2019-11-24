@@ -9,7 +9,7 @@ package main.java.ca.queensu.cisc327;
 
 public class QuinteracBackend {
 
-	public static int main(String[] args) {
+	public static void main(String[] args) {
 		
 		BackendObj backend = null;
 		try {
@@ -17,9 +17,9 @@ public class QuinteracBackend {
 		} catch (Exception e) {
 			//generally will only catch ProcessingExceptions
 			//default behaviour is to exit the system
-			System.out.printf(e.getMessage());
-			e.printStackTrace();
-			System.exit(-1);
+			System.out.println(e.getMessage());
+			//e.printStackTrace();
+			return;
 		}
 		
 		try {
@@ -27,9 +27,9 @@ public class QuinteracBackend {
 		} catch (Exception e) {
 			//generally will only catch ProcessingExceptions
 			//default behaviour is to exit the system
-			System.out.printf(e.getMessage());
-			e.printStackTrace();
-			System.exit(-1);
+			System.out.println(e.getMessage());
+			//e.printStackTrace();
+			return;
 		}
 		
 		try {
@@ -37,13 +37,11 @@ public class QuinteracBackend {
 		} catch (Exception e) {
 			//generally will only catch ProcessingExceptions
 			//default behaviour is to exit the system
-			System.out.printf(e.getMessage());
-			e.printStackTrace();
-			System.exit(-1);
+			System.out.println(e.getMessage());
+			//e.printStackTrace();
+			return;
 		}
 		
-		System.out.printf("Done");
-		
-		return 0;
+		System.out.println("Done");
 	}
 }
