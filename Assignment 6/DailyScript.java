@@ -5,8 +5,8 @@
  * Contributors: Matt Denny, Kai Laxdal, Brent Littlefield, Tong Liu
  */
 
-//package main.java.ca.queensu.cisc327;
-package ca.queensu.cisc327;
+package main.java.ca.queensu.cisc327;
+//package ca.queensu.cisc327;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,16 +15,24 @@ import java.util.Scanner;
 public class DailyScript 
 {
 	
+	/*
+	 * Daily Script: See assignment 6 description for details
+	 * @param: name (or abs path) of Transaction Summary Folder
+	 * @return: none
+	 */
 	public static void main (String args[]) 
 	{
 		String fileSep = System.getProperty("file.separator");
 		System.out.println("Starting daily script...");
 		Scanner consoleIn = new Scanner(System.in);
 		int sessionNum = getSessions(consoleIn);
-		String arr[] = new String[2];
+		String[] arr = new String[2];
 		arr[0] = "ValidAccountsFile.txt";
 		
-		String sumFolder = "summaries"; //change this as needed
+		// TODO
+		// The argument passed into DailyScript is the name or abs path of the 
+		// transaction summary folder for this instance of the script
+		String sumFolder = args[0]; 
 		File summaryFolder = new File(sumFolder);
 		summaryFolder.mkdir();
 		for (int n = 1; n <= sessionNum; n++) 
